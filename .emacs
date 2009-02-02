@@ -1,29 +1,197 @@
+;;
+(menu-bar-mode -1)
+(tool-bar-mode 0)
+
+;; Add-to-load-path                                                                                                                                                                
+(defun add-to-load-path (&rest paths)
+  (mapc '(lambda (path)
+                   (add-to-list 'load-path path))
+                (mapcar 'expand-file-name paths)))
+(add-to-load-path "/usr/share/emacs/site-lisp")
+
+
+(setq js2-highlight-level 3)
+(setq js2-basic-offset 4)
+(setq js2-cleanup-whitespace nil)
+(setq js2-indent-on-enter-key t)
+(setq js2-rebind-eol-bol-keys nil)
+(setq js2-use-font-lock-faces t)
+
+
+;; ;;flymake for perl
+;; ;;http://unknownplace.org/memo/2007/12/21
+;; (require 'flymake)
+;; (defvar flymake-perl-err-line-patterns '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
+;; (defconst flymake-allowed-perl-file-name-masks '(("\\.pl$" flymake-perl-init)
+;;                                                ("\\.pm$" flymake-perl-init)
+;;                                                ("\\.t$" flymake-perl-init)))
+
+;; (defun flymake-perl-init ()
+;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                      'flymake-create-temp-inplace))
+;;          (local-file (file-relative-name
+;;                       temp-file
+;;                       (file-name-directory buffer-file-name))))
+;;     (list "perl" (list "-wc" local-file))))
+
+;; (defun flymake-perl-load ()
+;;   (interactive)
+;;   (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+;;     (setq flymake-check-was-interrupted t))
+;;   (ad-activate 'flymake-post-syntax-check)
+;;   (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
+;;   (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
+;;   (set-perl5lib)
+;;   (flymake-mode t))
+
+;; (add-hook 'cperl-mode-hook '(lambda () (flymake-perl-load)))
+
+
+;; flymake (Emacs22¤«¤éÉ¸½àÅºÉÕ¤µ¤ì¤Æ¤¤¤ë)
+(require 'flymake)
+
+;; set-perl5lib
+;; ³«¤¤¤¿¥¹¥¯¥ê¥×¥È¤Î¥Ñ¥¹¤Ë±ş¤¸¤Æ¡¢@INC¤Ëlib¤òÄÉ²Ã¤·¤Æ¤¯¤ì¤ë
+;; °Ê²¼¤«¤é¥À¥¦¥ó¥í¡¼¥É¤¹¤ëÉ¬Í×¤¢¤ê
+;; http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
+(require 'set-perl5lib)
+
+;; ¥¨¥é¡¼¡¢¥¦¥©¡¼¥Ë¥ó¥°»ş¤Î¥Õ¥§¥¤¥¹
+(set-face-background 'flymake-errline "red4")
+(set-face-foreground 'flymake-errline "black")
+(set-face-background 'flymake-warnline "yellow")
+(set-face-foreground 'flymake-warnline "black")
+
+;; ¥¨¥é¡¼¤ò¥ß¥Ë¥Ğ¥Ã¥Õ¥¡¤ËÉ½¼¨
+;; http://d.hatena.ne.jp/xcezx/20080314/1205475020
+(defun flymake-display-err-minibuf ()
+  "Displays the error/warning for the current line in the minibuffer"
+  (interactive)
+  (let* ((line-no             (flymake-current-line-no))
+         (line-err-info-list  (nth 0 (flymake-find-err-info flymake-err-info line-no)))
+         (count               (length line-err-info-list)))
+    (while (> count 0)
+      (when line-err-info-list
+        (let* ((file       (flymake-ler-file (nth (1- count) line-err-info-list)))
+               (full-file  (flymake-ler-full-file (nth (1- count) line-err-info-list)))
+               (text (flymake-ler-text (nth (1- count) line-err-info-list)))
+               (line       (flymake-ler-line (nth (1- count) line-err-info-list))))
+          (message "[%s] %s" line text)))
+      (setq count (1- count)))))
+
+;; PerlÍÑÀßÄê
+;; http://unknownplace.org/memo/2007/12/21#e001
+(defvar flymake-perl-err-line-patterns
+  '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
+
+(defconst flymake-allowed-perl-file-name-masks
+  '(("\\.pl$" flymake-perl-init)
+    ("\\.pm$" flymake-perl-init)
+    ("\\.t$" flymake-perl-init)))
+
+(defun flymake-perl-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name))))
+    (list "perl" (list "-wc" local-file))))
+
+(defun flymake-perl-load ()
+  (interactive)
+  (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+    (setq flymake-check-was-interrupted t))
+  (ad-activate 'flymake-post-syntax-check)
+  (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
+  (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
+  (set-perl5lib)
+  (flymake-mode t))
+
+(add-hook 'cperl-mode-hook 'flymake-perl-load)
+
 
 ;emacs-w3m
 ;(require 'w3m-load)
 
-;; è¡Œæ•°è¡¨ç¤º
+;; ¹Ô¿ôÉ½¼¨
 (line-number-mode t)
+;; ·åÈÖ¹æ
+(column-number-mode t)
 
-;; ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ãªã„
+;; ¥¹¥¿¡¼¥È¥¢¥Ã¥×¥Ú¡¼¥¸¤òÉ½¼¨¤·¤Ê¤¤
 (setq inhibit-startup-message t)
 
-;; ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‰ãªã„
+;; ¥Ğ¥Ã¥¯¥¢¥Ã¥×¥Õ¥¡¥¤¥ë¤òºî¤é¤Ê¤¤
 (setq backup-inhibited t)
 
-;; ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é€æ˜åŒ–
+(when (eq window-system 'mac)
+  (add-hook 'window-setup-hook
+            (lambda ()
+;;              (setq mac-autohide-menubar-on-maximize t)
+              (set-frame-parameter nil 'fullscreen 'fullboth)
+              )))
+
+
+(defun mac-toggle-max-window ()
+  (interactive)
+  (if (frame-parameter nil 'fullscreen)
+      (set-frame-parameter nil 'fullscreen nil)
+    (set-frame-parameter nil 'fullscreen 'fullboth)))
+
+;; Carbon Emacs¤ÎÀßÄê¤ÇÆş¤ì¤é¤ì¤¿. ¥á¥Ë¥å¡¼¤ò±£¤·¤¿¤ê¡¥
+(custom-set-variables
+ '(display-time-mode t)
+ '(tool-bar-mode nil)
+ '(transient-mark-mode t))
+(custom-set-faces
+ )
+
+;;Color
+(if window-system (progn
+   (set-background-color "Black")
+   (set-foreground-color "LightGray")
+   (set-cursor-color "Gray")
+   (set-frame-parameter nil 'alpha 75)
+   ))
+
+;; ¥¦¥£¥ó¥É¥¦¤òÆ©ÌÀ²½
 ;(add-to-list 'default-frame-alist '(alpha . (0.85 0.85)))
 
-;; ãƒ•ã‚©ãƒ³ãƒˆè¨­å®š
+;; ¥¦¥£¥ó¥É¥¦¤òºÇÂç²½
+(mac-toggle-max-window)
+
+;; »ş¹ï¤òÉ½¼¨
+(setq display-time-day-and-date t)
+(display-time)
+
+;; ¥Õ¥©¥ó¥ÈÀßÄê
 ;(if (eq window-system 'mac) (require 'carbon-font))
 ;(fixed-width-set-fontset "hirakaku_w3" 10)
 ;(setq fixed-width-rescale nil)
 
 ;ElScreen
+(setq elscreen-prefix-key "\C-z")
 (require 'elscreen)
-(if window-system
-    (define-key elscreen-map "\C-z" 'iconify-or-deiconify-frame)
-  (define-key elscreen-map "\C-z" 'suspend-emacs))
+;(if window-system
+;    (define-key elscreen-map "\C-z" 'iconify-or-deiconify-frame)
+;  (define-key elscreen-map "\C-z" 'suspend-emacs))
+
+;create screen automatically
+(defmacro elscreen-create-automatically (ad-do-it)
+  `(if (not (elscreen-one-screen-p))
+       ,ad-do-it
+     (elscreen-create)
+     (elscreen-notify-screen-modification 'force-immediately)
+     (elscreen-message "New screen is automatically created")))
+
+(defadvice elscreen-next (around elscreen-create-automatically activate)
+  (elscreen-create-automatically ad-do-it))
+
+(defadvice elscreen-previous (around elscreen-create-automatically activate)
+  (elscreen-create-automatically ad-do-it))
+
+(defadvice elscreen-toggle (around elscreen-create-automatically activate)
+  (elscreen-create-automatically ad-do-it))
 
 ;visible-bell
 (setq visible-bell t)
@@ -49,19 +217,19 @@
       process-coding-system-alist))
 
 (global-font-lock-mode t)
-(setq-default transient-mark-mode t); ä¸€æ™‚ãƒãƒ¼ã‚¯ãƒ¢ãƒ¼ãƒ‰ã®è‡ªå‹•æœ‰åŠ¹åŒ–
+(setq-default transient-mark-mode t); °ì»ş¥Ş¡¼¥¯¥â¡¼¥É¤Î¼«Æ°Í­¸ú²½
 (setq highlight-nonselected-windows t)
-; C-x C-u ãŒä½•ã‚‚ã—ãªã„ã‚ˆã†ã«å¤‰æ›´ã™ã‚‹
+; C-x C-u ¤¬²¿¤â¤·¤Ê¤¤¤è¤¦¤ËÊÑ¹¹¤¹¤ë
 (global-unset-key "\C-x\C-u")
-(show-paren-mode 1) ;æ‹¬å¼§ã®å¯¾å¿œã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆ.
-(setq next-line-add-newlines nil) ;ãƒãƒƒãƒ•ã‚¡æœ«å°¾ã«ä½™è¨ˆãªæ”¹è¡Œã‚³ãƒ¼ãƒ‰ã‚’é˜²ããŸã‚ã®è¨­å®š
-(define-key ctl-x-map "l" 'goto-line) ; C-l ã§ goto-line ã‚’å®Ÿè¡Œ
-; C-h ã§ã‚«ãƒ¼ã‚½ãƒ«ã®å·¦ã«ã‚ã‚‹æ–‡å­—ã‚’æ¶ˆã™
+(show-paren-mode 1) ;³ç¸Ì¤ÎÂĞ±ş¤ò¥Ï¥¤¥é¥¤¥È.
+(setq next-line-add-newlines nil) ;¥Ğ¥Ã¥Õ¥¡ËöÈø¤ËÍ¾·×¤Ê²ş¹Ô¥³¡¼¥É¤òËÉ¤°¤¿¤á¤ÎÀßÄê
+(define-key ctl-x-map "l" 'goto-line) ; C-l ¤Ç goto-line ¤ò¼Â¹Ô
+; C-h ¤Ç¥«¡¼¥½¥ë¤Îº¸¤Ë¤¢¤ëÊ¸»ú¤ò¾Ã¤¹
 (define-key global-map "\C-h" 'delete-backward-char)
-; C-o ã«å‹•çš„ç•¥èªå±•é–‹æ©Ÿèƒ½ã‚’å‰²ã‚Šå½“ã¦ã‚‹
+; C-o ¤ËÆ°ÅªÎ¬¸ìÅ¸³«µ¡Ç½¤ò³ä¤êÅö¤Æ¤ë
 (define-key global-map "\C-o" 'dabbrev-expand)
-(setq dabbrev-case-fold-search nil) ; å¤§æ–‡å­—å°æ–‡å­—ã‚’åŒºåˆ¥
-;; æ—¥æœ¬èªãƒ»è‹±èªæ··ã˜ã‚Šæ–‡ã§ã®åŒºåˆ‡åˆ¤å®š
+(setq dabbrev-case-fold-search nil) ; ÂçÊ¸»ú¾®Ê¸»ú¤ò¶èÊÌ
+;; ÆüËÜ¸ì¡¦±Ñ¸ìº®¤¸¤êÊ¸¤Ç¤Î¶èÀÚÈ½Äê
 (defadvice dabbrev-expand
   (around modify-regexp-for-japanese activate compile)
   "Modify `dabbrev-abbrev-char-regexp' dynamically for Japanese words."
@@ -86,7 +254,7 @@
 (delete-selection-mode 1)
 ;; cperl-mode
 ;(autoload 'perl-mode "cperl-mode" "alternate mode for editing Perl programs" t)
-(setq cperl-auto-newline t)
+;(setq cperl-auto-newline t)
 (setq cperl-indent-parens-as-block t)
 (setq cperl-close-paren-offset -4)
 (setq cperl-indent-level 4)
@@ -110,3 +278,20 @@
 
 ;soft tab
 (setq-default tab-width 4 indent-tabs-mode nil)
+
+(add-to-list 'default-frame-alist '(alpha . (0.85 0.85)))
+
+
+;;====================================
+;;; ÀŞ¤êÊÖ¤·É½¼¨ON/OFF
+;;====================================
+(defun toggle-truncate-lines ()
+  "ÀŞ¤êÊÖ¤·É½¼¨¤ò¥È¥°¥ëÆ°ºî¤·¤Ş¤¹."
+  (interactive)
+  (if truncate-lines
+      (setq truncate-lines nil)
+    (setq truncate-lines t))
+  (recenter))
+
+
+(global-set-key "\C-c\C-l" 'toggle-truncate-lines) ; ÀŞ¤êÊÖ¤·É½¼¨ON/OFF
