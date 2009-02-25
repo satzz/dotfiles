@@ -9,6 +9,31 @@
                 (mapcar 'expand-file-name paths)))
 (add-to-load-path "/usr/share/emacs/site-lisp")
 
+(require 'auto-save-buffers)
+(run-with-idle-timer 0.3 t 'auto-save-buffers) 
+
+;; http://d.hatena.ne.jp/antipop/20081120/1227180641
+(require 'outputz)
+(setq outputz-key "fukkatsunojumon")      ;; 復活の呪文
+(setq outputz-uri "http://appleofsatzz.com/%s") ;; 適当なURL。%sにmajor-modeの名前が入るので、major-modeごとのURLで投稿できます。
+(global-outputz-mode t)
+
+;; http://d.hatena.ne.jp/yaotti/20081121/1227252525
+;auto-save-buffersを使っている人のためのoutputz.elの設定
+(remove-hook 'after-save-hook 'outputz)
+(add-hook 'kill-buffer-hook 'outputz)
+(defvar my-before-kill-emacs-hook nil
+  "Hook to run before `save-buffers-kill-emacs'.")
+(defun outputz-buffers ()
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (outputz))))
+(add-hook 'my-before-kill-emacs-hook 'outputz-buffers)
+(defadvice save-buffers-kill-emacs (around before-kill-hook activate)
+  (run-hooks 'my-before-kill-emacs-hook)
+  (sleep-for 1) ;;とりあえず
+  ad-do-it)
+
 
 (setq js2-highlight-level 3)
 (setq js2-basic-offset 4)

@@ -2,11 +2,30 @@
 source /sw/bin/init.sh
 
 export PATH=$HOME/bin:/opt/local/bin:$PATH:/usr/local/lib/gcc-lib:/usr/local/bin:/usr/local/mysql/bin
-export HOSTNAME=hatena-nokonpyuta
+export HOSTNAME=apple-of-satzz
 #時間内に何度Keychainを実行したかに関係なく，30分でssh-agentが終了するようになる
-keychain --timeout 1 ~/.ssh/id_dsa  # 秘密鍵
-source ~/.keychain/$HOSTNAME-sh
+# keychain --timeout 1 ~/.ssh/id_dsa  # 秘密鍵
+# source ~/.keychain/$HOSTNAME-sh
 # based by http://devel.aquahill.net/zsh/zshoptions
+
+export EDITOR="vi"
+
+# call API in outputz.com by zsh
+# http://cucumber.g.hatena.ne.jp/tomisima/20081203/1228235994
+preexec() {
+    if [ ${1} ]; then
+        case ${1} in
+	    ls | ll | la)
+		uri=http://ls.localhost/
+		;;
+	    *)
+		uri=http://zsh.localhost/
+		;;
+	esac
+        key=`ruby -rubygems -e 'require "pit";print Pit.get("outputz.com")["key"]'`
+        curl -s http://outputz.com/api/post -F key=${key} -F uri=${uri} -F size=${#1} >/dev/null
+    fi
+}
 
 # 複数の zsh を同時に使う時など history ファイルに上書きせず追加する
 setopt append_history
