@@ -1,180 +1,272 @@
 #read settings of fink
 source /sw/bin/init.sh
 
-export PATH=$HOME/bin:/opt/local/bin:$PATH:/usr/local/lib/gcc-lib:/usr/local/bin:/usr/local/mysql/bin
+export PATH=$HOME/.gem/ruby/1.8/bin:$HOME/bin:/opt/local/bin:$PATH:/usr/local/lib/gcc-lib:/usr/local/bin:/usr/local/mysql/bin
 export HOSTNAME=apple-of-satzz
-#æ™‚é–“å†…ã«ä½•åº¦Keychainã‚’å®Ÿè¡Œã—ãŸã‹ã«é–¢ä¿‚ãªãï¼Œ30åˆ†ã§ssh-agentãŒçµ‚äº†ã™ã‚‹ã‚ˆã†ã«ãªã‚‹
-# keychain --timeout 1 ~/.ssh/id_dsa  # ç§˜å¯†éµ
+#’»þ’´Ö’Æâ’¤Ë’²¿’ÅÙKeychain’¤ò’¼Â’¹Ô’¤·’¤¿’¤«’¤Ë’´Ø’·¸’¤Ê’¤¯’¡¤30’Ê¬’¤Çssh-agent’¤¬’½ª’Î»’¤¹’¤ë’¤è’¤¦’¤Ë’¤Ê’¤ë
+# keychain --timeout 1 ~/.ssh/id_dsa  # ’Èë’Ì©’¸°
 # source ~/.keychain/$HOSTNAME-sh
 # based by http://devel.aquahill.net/zsh/zshoptions
 
 export EDITOR="vi"
 
+# http://d.hatena.ne.jp/amt/20070423/MyPerlLikeMatch
+my_perl_like_match() { # perl ’É÷’Àµ’µ¬’É½’¸½’¥Þ’¥Ã’¥Á
+    if [ $# -ne 2 ] 		# ’°ú’¿ô’¤Î’¿ô’¤ò’¥Á’¥§’¥Ã’¥¯
+	then echo "Usage:: \t% $0 'RegExp' value\t# RegExp need quotation."
+	    echo "Example:: \t% $0 '/^FOO$/i' foo"
+    fi
+    local pattern=$1
+    local value=$2
+
+    if echo $value | perl -nle "exit(1) unless ${pattern}" &> /dev/null 
+	then return 0 
+    else return 1
+    fi
+}
+
 # call API in outputz.com by zsh
 # http://cucumber.g.hatena.ne.jp/tomisima/20081203/1228235994
 preexec() {
-    if [ ${1} ]; then
-        case ${1} in
-	    ls | ll | la)
-		uri=http://ls.localhost/
-		;;
-	    *)
-		uri=http://zsh.localhost/
-		;;
-	esac
+    local command=${1}
+    if [ $command ]; then
+        if my_perl_like_match '/^ls/', $command; then
+		    uri=http://ls.localhost/
+        elif my_perl_like_match '/^vi/', $command; then
+		    uri=http://vi.localhost/
+        elif my_perl_like_match '/^echo/', $command; then
+		    uri=http://echo.localhost/
+        elif my_perl_like_match '/^top/', $command; then
+		    uri=http://top.localhost/
+        elif my_perl_like_match '/^ps/', $command; then
+		    uri=http://ps.localhost/
+        elif my_perl_like_match '/^(ptex|platex|dvi2ps|xdvi)/', $command; then
+		    uri=http://tex.localhost/
+        elif my_perl_like_match '/^ping/', $command; then
+		    uri=http://ping.localhost/
+        elif my_perl_like_match '/^ssh/', $command; then
+		    uri=http://ssh.localhost/
+        elif my_perl_like_match '/^sh/', $command; then
+		    uri=http://sh.localhost/
+        elif my_perl_like_match '/^bash/', $command; then
+		    uri=http://bash.localhost/
+        elif my_perl_like_match '/^cat/', $command; then
+		    uri=http://cat.localhost/
+        elif my_perl_like_match '/^less/', $command; then
+		    uri=http://less.localhost/
+        elif my_perl_like_match '/^head/', $command; then
+		    uri=http://head.localhost/
+        elif my_perl_like_match '/^tail/', $command; then
+		    uri=http://tail.localhost/
+        elif my_perl_like_match '/^more/', $command; then
+		    uri=http://more.localhost/
+        elif my_perl_like_match '/^source/', $command; then
+		    uri=http://source.localhost/
+        elif my_perl_like_match '/^(perl|cpan|prove)/', $command; then
+		    uri=http://perl.localhost/
+        elif my_perl_like_match '/^python/', $command; then
+		    uri=http://python.localhost/
+        elif my_perl_like_match '/^sed/', $command; then
+		    uri=http://sed.localhost/
+        elif my_perl_like_match '/^awk/', $command; then
+		    uri=http://awk.localhost/
+        elif my_perl_like_match '/^(gcc|gdb)/', $command; then
+		    uri=http://c.localhost/
+        elif my_perl_like_match '/^(ruby|rails|gem|rake)/', $command; then
+		    uri=http://ruby.localhost/
+        elif my_perl_like_match '/^gnuplot/', $command; then
+		    uri=http://gnuplot.localhost/
+        elif my_perl_like_match '/^wget/', $command; then
+		    uri=http://wget.localhost/
+        elif my_perl_like_match '/^touch/', $command; then
+		    uri=http://touch.localhost/
+        elif my_perl_like_match '/^mkdir/', $command; then
+		    uri=http://mkdir.localhost/
+        elif my_perl_like_match '/^rmdir/', $command; then
+		    uri=http://rmdir.localhost/
+        elif my_perl_like_match '/^rm/', $command; then
+		    uri=http://rm.localhost/
+        elif my_perl_like_match '/^mv/', $command; then
+		    uri=http:/mv.localhost/
+        elif my_perl_like_match '/^cp/', $command; then
+		    uri=http:/cp.localhost/
+        elif my_perl_like_match '/^cd/', $command; then
+		    uri=http://cd.localhost/
+        elif my_perl_like_match '/^sudo/', $command; then
+		    uri=http://sudo.localhost/
+        elif my_perl_like_match '/^which/', $command; then
+		    uri=http://which.localhost/
+        elif my_perl_like_match '/^where/', $command; then
+		    uri=http://where.localhost/
+        elif my_perl_like_match '/^kill/', $command; then
+		    uri=http://kill.localhost/
+        elif my_perl_like_match '/^mysql/', $command; then
+		    uri=http://mysql.localhost/
+        elif my_perl_like_match '/^git/', $command; then
+		    uri=http://git.localhost/
+        elif my_perl_like_match '/^tig/', $command; then
+		    uri=http://tig.localhost/
+        elif my_perl_like_match '/^termtter/', $command; then
+		    uri=http://termtter.localhost/
+        else
+		    uri=http://zsh.localhost/
+        fi
+
         key=`ruby -rubygems -e 'require "pit";print Pit.get("outputz.com")["key"]'`
         curl -s http://outputz.com/api/post -F key=${key} -F uri=${uri} -F size=${#1} >/dev/null
     fi
 }
 
-# è¤‡æ•°ã® zsh ã‚’åŒæ™‚ã«ä½¿ã†æ™‚ãªã© history ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¸Šæ›¸ãã›ãšè¿½åŠ ã™ã‚‹
+
+
+# ’Ê£’¿ô’¤Î zsh ’¤ò’Æ±’»þ’¤Ë’»È’¤¦’»þ’¤Ê’¤É history ’¥Õ’¥¡’¥¤’¥ë’¤Ë’¾å’½ñ’¤­’¤»’¤º’ÄÉ’²Ã’¤¹’¤ë
 setopt append_history
 
-# æŒ‡å®šã—ãŸã‚³ãƒžãƒ³ãƒ‰åãŒãªãã€ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã¨ä¸€è‡´ã—ãŸå ´åˆ cd ã™ã‚‹
+# ’»Ø’Äê’¤·’¤¿’¥³’¥Þ’¥ó’¥É’Ì¾’¤¬’¤Ê’¤¯’¡¢’¥Ç’¥£’¥ì’¥¯’¥È’¥ê’Ì¾’¤È’°ì’Ã×’¤·’¤¿’¾ì’¹ç cd ’¤¹’¤ë
 setopt auto_cd
 
-# è£œå®Œå€™è£œãŒè¤‡æ•°ã‚ã‚‹æ™‚ã«ã€ä¸€è¦§è¡¨ç¤ºã™ã‚‹
+# ’Êä’´°’¸õ’Êä’¤¬’Ê£’¿ô’¤¢’¤ë’»þ’¤Ë’¡¢’°ì’Í÷’É½’¼¨’¤¹’¤ë
 setopt auto_list
 
-# è£œå®Œã‚­ãƒ¼ï¼ˆTab, Ctrl+I) ã‚’é€£æ‰“ã™ã‚‹ã ã‘ã§é †ã«è£œå®Œå€™è£œã‚’è‡ªå‹•ã§è£œå®Œã™ã‚‹
+# ’Êä’´°’¥­’¡¼’¡ÊTab, Ctrl+I) ’¤ò’Ï¢’ÂÇ’¤¹’¤ë’¤À’¤±’¤Ç’½ç’¤Ë’Êä’´°’¸õ’Êä’¤ò’¼«’Æ°’¤Ç’Êä’´°’¤¹’¤ë
 setopt auto_menu
 
-# ã‚«ãƒƒã‚³ã®å¯¾å¿œãªã©ã‚’è‡ªå‹•çš„ã«è£œå®Œã™ã‚‹
+# ’¥«’¥Ã’¥³’¤Î’ÂÐ’±þ’¤Ê’¤É’¤ò’¼«’Æ°’Åª’¤Ë’Êä’´°’¤¹’¤ë
 setopt auto_param_keys
 
-# ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã®è£œå®Œã§æœ«å°¾ã® / ã‚’è‡ªå‹•çš„ã«ä»˜åŠ ã—ã€æ¬¡ã®è£œå®Œã«å‚™ãˆã‚‹
+# ’¥Ç’¥£’¥ì’¥¯’¥È’¥ê’Ì¾’¤Î’Êä’´°’¤Ç’Ëö’Èø’¤Î / ’¤ò’¼«’Æ°’Åª’¤Ë’ÉÕ’²Ã’¤·’¡¢’¼¡’¤Î’Êä’´°’¤Ë’È÷’¤¨’¤ë
 setopt auto_param_slash
 
-# æœ€å¾ŒãŒãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã§çµ‚ã‚ã£ã¦ã„ã‚‹å ´åˆæœ«å°¾ã® / ã‚’è‡ªå‹•çš„ã«å–ã‚Šé™¤ã
+# ’ºÇ’¸å’¤¬’¥Ç’¥£’¥ì’¥¯’¥È’¥ê’Ì¾’¤Ç’½ª’¤ï’¤Ã’¤Æ’¤¤’¤ë’¾ì’¹ç’Ëö’Èø’¤Î / ’¤ò’¼«’Æ°’Åª’¤Ë’¼è’¤ê’½ü’¤¯
 #setopt auto_remove_slash
 
-# ã‚µã‚¹ãƒšãƒ³ãƒ‰ä¸­ã®ãƒ—ãƒ­ã‚»ã‚¹ã¨åŒã˜ã‚³ãƒžãƒ³ãƒ‰åã‚’å®Ÿè¡Œã—ãŸå ´åˆã¯ãƒªã‚¸ãƒ¥ãƒ¼ãƒ ã™ã‚‹
+# ’¥µ’¥¹’¥Ú’¥ó’¥É’Ãæ’¤Î’¥×’¥í’¥»’¥¹’¤È’Æ±’¤¸’¥³’¥Þ’¥ó’¥É’Ì¾’¤ò’¼Â’¹Ô’¤·’¤¿’¾ì’¹ç’¤Ï’¥ê’¥¸’¥å’¡¼’¥à’¤¹’¤ë
 setopt auto_resume
 
-# ãƒ“ãƒ¼ãƒ—éŸ³ã‚’é³´ã‚‰ã•ãªã„ã‚ˆã†ã«ã™ã‚‹
+# ’¥Ó’¡¼’¥×’²»’¤ò’ÌÄ’¤é’¤µ’¤Ê’¤¤’¤è’¤¦’¤Ë’¤¹’¤ë
 setopt NO_beep
 
-# {a-c} ã‚’ a b c ã«å±•é–‹ã™ã‚‹æ©Ÿèƒ½ã‚’ä½¿ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹
+# {a-c} ’¤ò a b c ’¤Ë’Å¸’³«’¤¹’¤ë’µ¡’Ç½’¤ò’»È’¤¨’¤ë’¤è’¤¦’¤Ë’¤¹’¤ë
 setopt brace_ccl
 
-# å†…éƒ¨ã‚³ãƒžãƒ³ãƒ‰ã® echo ã‚’ BSD äº’æ›ã«ã™ã‚‹
+# ’Æâ’Éô’¥³’¥Þ’¥ó’¥É’¤Î echo ’¤ò BSD ’¸ß’´¹’¤Ë’¤¹’¤ë
 #setopt bsd_echo
 
-# ã‚·ãƒ³ãƒœãƒªãƒƒã‚¯ãƒªãƒ³ã‚¯ã¯å®Ÿä½“ã‚’è¿½ã†ã‚ˆã†ã«ãªã‚‹
+# ’¥·’¥ó’¥Ü’¥ê’¥Ã’¥¯’¥ê’¥ó’¥¯’¤Ï’¼Â’ÂÎ’¤ò’ÄÉ’¤¦’¤è’¤¦’¤Ë’¤Ê’¤ë
 #setopt chase_links
 
-# æ—¢å­˜ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¸Šæ›¸ãã—ãªã„ã‚ˆã†ã«ã™ã‚‹
+# ’´û’Â¸’¤Î’¥Õ’¥¡’¥¤’¥ë’¤ò’¾å’½ñ’¤­’¤·’¤Ê’¤¤’¤è’¤¦’¤Ë’¤¹’¤ë
 #setopt clobber
 
-# ã‚³ãƒžãƒ³ãƒ‰ã®ã‚¹ãƒšãƒ«ãƒã‚§ãƒƒã‚¯ã‚’ã™ã‚‹
+# ’¥³’¥Þ’¥ó’¥É’¤Î’¥¹’¥Ú’¥ë’¥Á’¥§’¥Ã’¥¯’¤ò’¤¹’¤ë
 setopt correct
 
-# ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å…¨ã¦ã®ã‚¹ãƒšãƒ«ãƒã‚§ãƒƒã‚¯ã‚’ã™ã‚‹
+# ’¥³’¥Þ’¥ó’¥É’¥é’¥¤’¥ó’Á´’¤Æ’¤Î’¥¹’¥Ú’¥ë’¥Á’¥§’¥Ã’¥¯’¤ò’¤¹’¤ë
 #setopt correct_all
 
-# =command ã‚’ command ã®ãƒ‘ã‚¹åã«å±•é–‹ã™ã‚‹
+# =command ’¤ò command ’¤Î’¥Ñ’¥¹’Ì¾’¤Ë’Å¸’³«’¤¹’¤ë
 setopt equals
 
-# ãƒ•ã‚¡ã‚¤ãƒ«åã§ #, ~, ^ ã® 3 æ–‡å­—ã‚’æ­£è¦è¡¨ç¾ã¨ã—ã¦æ‰±ã†
+# ’¥Õ’¥¡’¥¤’¥ë’Ì¾’¤Ç #, ~, ^ ’¤Î 3 ’Ê¸’»ú’¤ò’Àµ’µ¬’É½’¸½’¤È’¤·’¤Æ’°·’¤¦
 setopt extended_glob
 
-# zsh ã®é–‹å§‹ãƒ»çµ‚äº†æ™‚åˆ»ã‚’ãƒ’ã‚¹ãƒˆãƒªãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚€
+# zsh ’¤Î’³«’»Ï’¡¦’½ª’Î»’»þ’¹ï’¤ò’¥Ò’¥¹’¥È’¥ê’¥Õ’¥¡’¥¤’¥ë’¤Ë’½ñ’¤­’¹þ’¤à
 #setopt extended_history
 
-# Ctrl+S/Ctrl+Q ã«ã‚ˆã‚‹ãƒ•ãƒ­ãƒ¼åˆ¶å¾¡ã‚’ä½¿ã‚ãªã„ã‚ˆã†ã«ã™ã‚‹
+# Ctrl+S/Ctrl+Q ’¤Ë’¤è’¤ë’¥Õ’¥í’¡¼’À©’¸æ’¤ò’»È’¤ï’¤Ê’¤¤’¤è’¤¦’¤Ë’¤¹’¤ë
 setopt NO_flow_control
 
-# å„ã‚³ãƒžãƒ³ãƒ‰ãŒå®Ÿè¡Œã•ã‚Œã‚‹ã¨ãã«ãƒ‘ã‚¹ã‚’ãƒãƒƒã‚·ãƒ¥ã«å…¥ã‚Œã‚‹
+# ’³Æ’¥³’¥Þ’¥ó’¥É’¤¬’¼Â’¹Ô’¤µ’¤ì’¤ë’¤È’¤­’¤Ë’¥Ñ’¥¹’¤ò’¥Ï’¥Ã’¥·’¥å’¤Ë’Æþ’¤ì’¤ë
 #setopt hash_cmds
 
-# ç›´å‰ã¨åŒã˜ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã¯ãƒ’ã‚¹ãƒˆãƒªã«è¿½åŠ ã—ãªã„
+# ’Ä¾’Á°’¤È’Æ±’¤¸’¥³’¥Þ’¥ó’¥É’¥é’¥¤’¥ó’¤Ï’¥Ò’¥¹’¥È’¥ê’¤Ë’ÄÉ’²Ã’¤·’¤Ê’¤¤
 setopt hist_ignore_dups
 
-# ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®å…ˆé ­ãŒã‚¹ãƒšãƒ¼ã‚¹ã§å§‹ã¾ã‚‹å ´åˆãƒ’ã‚¹ãƒˆãƒªã«è¿½åŠ ã—ãªã„
+# ’¥³’¥Þ’¥ó’¥É’¥é’¥¤’¥ó’¤Î’Àè’Æ¬’¤¬’¥¹’¥Ú’¡¼’¥¹’¤Ç’»Ï’¤Þ’¤ë’¾ì’¹ç’¥Ò’¥¹’¥È’¥ê’¤Ë’ÄÉ’²Ã’¤·’¤Ê’¤¤
 setopt hist_ignore_space
 
-# ãƒ’ã‚¹ãƒˆãƒªã‚’å‘¼ã³å‡ºã—ã¦ã‹ã‚‰å®Ÿè¡Œã™ã‚‹é–“ã«ä¸€æ—¦ç·¨é›†ã§ãã‚‹çŠ¶æ…‹ã«ãªã‚‹
+# ’¥Ò’¥¹’¥È’¥ê’¤ò’¸Æ’¤Ó’½Ð’¤·’¤Æ’¤«’¤é’¼Â’¹Ô’¤¹’¤ë’´Ö’¤Ë’°ì’Ã¶’ÊÔ’½¸’¤Ç’¤­’¤ë’¾õ’ÂÖ’¤Ë’¤Ê’¤ë
 setopt hist_verify
 
-# ã‚·ã‚§ãƒ«ãŒçµ‚äº†ã—ã¦ã‚‚è£ã‚¸ãƒ§ãƒ–ã« HUP ã‚·ã‚°ãƒŠãƒ«ã‚’é€ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
+# ’¥·’¥§’¥ë’¤¬’½ª’Î»’¤·’¤Æ’¤â’Î¢’¥¸’¥ç’¥Ö’¤Ë HUP ’¥·’¥°’¥Ê’¥ë’¤ò’Á÷’¤é’¤Ê’¤¤’¤è’¤¦’¤Ë’¤¹’¤ë
 setopt NO_hup
 
-# Ctrl+D ã§ã¯çµ‚äº†ã—ãªã„ã‚ˆã†ã«ãªã‚‹ï¼ˆexit, logout ãªã©ã‚’ä½¿ã†ï¼‰
+# Ctrl+D ’¤Ç’¤Ï’½ª’Î»’¤·’¤Ê’¤¤’¤è’¤¦’¤Ë’¤Ê’¤ë’¡Êexit, logout ’¤Ê’¤É’¤ò’»È’¤¦’¡Ë
 setopt ignore_eof
 
-# ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã§ã‚‚ # ä»¥é™ã‚’ã‚³ãƒ¡ãƒ³ãƒˆã¨è¦‹ãªã™
+# ’¥³’¥Þ’¥ó’¥É’¥é’¥¤’¥ó’¤Ç’¤â # ’°Ê’¹ß’¤ò’¥³’¥á’¥ó’¥È’¤È’¸«’¤Ê’¤¹
 setopt interactive_comments
 
-# auto_list ã®è£œå®Œå€™è£œä¸€è¦§ã§ã€ls -F ã®ã‚ˆã†ã«ãƒ•ã‚¡ã‚¤ãƒ«ã®ç¨®åˆ¥ã‚’ãƒžãƒ¼ã‚¯è¡¨ç¤º
+# auto_list ’¤Î’Êä’´°’¸õ’Êä’°ì’Í÷’¤Ç’¡¢ls -F ’¤Î’¤è’¤¦’¤Ë’¥Õ’¥¡’¥¤’¥ë’¤Î’¼ï’ÊÌ’¤ò’¥Þ’¡¼’¥¯’É½’¼¨
 setopt list_types
 
-# å†…éƒ¨ã‚³ãƒžãƒ³ãƒ‰ jobs ã®å‡ºåŠ›ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ jobs -l ã«ã™ã‚‹
+# ’Æâ’Éô’¥³’¥Þ’¥ó’¥É jobs ’¤Î’½Ð’ÎÏ’¤ò’¥Ç’¥Õ’¥©’¥ë’¥È’¤Ç jobs -l ’¤Ë’¤¹’¤ë
 setopt long_list_jobs
 
-# ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®å¼•æ•°ã§ --prefix=/usr ãªã©ã® = ä»¥é™ã§ã‚‚è£œå®Œã§ãã‚‹
+# ’¥³’¥Þ’¥ó’¥É’¥é’¥¤’¥ó’¤Î’°ú’¿ô’¤Ç --prefix=/usr ’¤Ê’¤É’¤Î = ’°Ê’¹ß’¤Ç’¤â’Êä’´°’¤Ç’¤­’¤ë
 setopt magic_equal_subst
 
-# ãƒ¡ãƒ¼ãƒ«ã‚¹ãƒ—ãƒ¼ãƒ« $MAIL ãŒèª­ã¾ã‚Œã¦ã„ãŸã‚‰ãƒ¯ãƒ¼ãƒ‹ãƒ³ã‚°ã‚’è¡¨ç¤ºã™ã‚‹
+# ’¥á’¡¼’¥ë’¥¹’¥×’¡¼’¥ë $MAIL ’¤¬’ÆÉ’¤Þ’¤ì’¤Æ’¤¤’¤¿’¤é’¥ï’¡¼’¥Ë’¥ó’¥°’¤ò’É½’¼¨’¤¹’¤ë
 #setopt mail_warning
 
-# ãƒ•ã‚¡ã‚¤ãƒ«åã®å±•é–‹ã§ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ãƒžãƒƒãƒã—ãŸå ´åˆæœ«å°¾ã« / ã‚’ä»˜åŠ ã™ã‚‹
+# ’¥Õ’¥¡’¥¤’¥ë’Ì¾’¤Î’Å¸’³«’¤Ç’¥Ç’¥£’¥ì’¥¯’¥È’¥ê’¤Ë’¥Þ’¥Ã’¥Á’¤·’¤¿’¾ì’¹ç’Ëö’Èø’¤Ë / ’¤ò’ÉÕ’²Ã’¤¹’¤ë
 setopt mark_dirs
 
-# è£œå®Œå€™è£œãŒè¤‡æ•°ã‚ã‚‹æ™‚ã€ä¸€è¦§è¡¨ç¤º (auto_list) ã›ãšã€ã™ãã«æœ€åˆã®å€™è£œã‚’è£œå®Œã™ã‚‹
+# ’Êä’´°’¸õ’Êä’¤¬’Ê£’¿ô’¤¢’¤ë’»þ’¡¢’°ì’Í÷’É½’¼¨ (auto_list) ’¤»’¤º’¡¢’¤¹’¤°’¤Ë’ºÇ’½é’¤Î’¸õ’Êä’¤ò’Êä’´°’¤¹’¤ë
 #setopt menu_complete
 
-# è¤‡æ•°ã®ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã‚„ãƒ‘ã‚¤ãƒ—ãªã©ã€å¿…è¦ã«å¿œã˜ã¦ tee ã‚„ cat ã®æ©Ÿèƒ½ãŒä½¿ã‚ã‚Œã‚‹
+# ’Ê£’¿ô’¤Î’¥ê’¥À’¥¤’¥ì’¥¯’¥È’¤ä’¥Ñ’¥¤’¥×’¤Ê’¤É’¡¢’É¬’Í×’¤Ë’±þ’¤¸’¤Æ tee ’¤ä cat ’¤Î’µ¡’Ç½’¤¬’»È’¤ï’¤ì’¤ë
 setopt multios
 
-# ãƒ•ã‚¡ã‚¤ãƒ«åã®å±•é–‹ã§ã€è¾žæ›¸é †ã§ã¯ãªãæ•°å€¤çš„ã«ã‚½ãƒ¼ãƒˆã•ã‚Œã‚‹ã‚ˆã†ã«ãªã‚‹
+# ’¥Õ’¥¡’¥¤’¥ë’Ì¾’¤Î’Å¸’³«’¤Ç’¡¢’¼­’½ñ’½ç’¤Ç’¤Ï’¤Ê’¤¯’¿ô’ÃÍ’Åª’¤Ë’¥½’¡¼’¥È’¤µ’¤ì’¤ë’¤è’¤¦’¤Ë’¤Ê’¤ë
 setopt numeric_glob_sort
 
-# ã‚³ãƒžãƒ³ãƒ‰åã« / ãŒå«ã¾ã‚Œã¦ã„ã‚‹ã¨ã PATH ä¸­ã®ã‚µãƒ–ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’æŽ¢ã™
+# ’¥³’¥Þ’¥ó’¥É’Ì¾’¤Ë / ’¤¬’´Þ’¤Þ’¤ì’¤Æ’¤¤’¤ë’¤È’¤­ PATH ’Ãæ’¤Î’¥µ’¥Ö’¥Ç’¥£’¥ì’¥¯’¥È’¥ê’¤ò’Ãµ’¤¹
 #setopt path_dirs
 
-# 8 ãƒ“ãƒƒãƒˆç›®ã‚’é€šã™ã‚ˆã†ã«ãªã‚Šã€æ—¥æœ¬èªžã®ãƒ•ã‚¡ã‚¤ãƒ«åãªã©ã‚’è¦‹ã‚Œã‚‹ã‚ˆã†ã«ãªã‚‹
+# 8 ’¥Ó’¥Ã’¥È’ÌÜ’¤ò’ÄÌ’¤¹’¤è’¤¦’¤Ë’¤Ê’¤ê’¡¢’Æü’ËÜ’¸ì’¤Î’¥Õ’¥¡’¥¤’¥ë’Ì¾’¤Ê’¤É’¤ò’¸«’¤ì’¤ë’¤è’¤¦’¤Ë’¤Ê’¤ë
 setopt print_eightbit
 
-# æˆ»ã‚Šå€¤ãŒ 0 ä»¥å¤–ã®å ´åˆçµ‚äº†ã‚³ãƒ¼ãƒ‰ã‚’è¡¨ç¤ºã™ã‚‹
+# ’Ìá’¤ê’ÃÍ’¤¬ 0 ’°Ê’³°’¤Î’¾ì’¹ç’½ª’Î»’¥³’¡¼’¥É’¤ò’É½’¼¨’¤¹’¤ë
 #setopt print_exit_value
 
-# ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚¹ã‚¿ãƒƒã‚¯ã«åŒã˜ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¿½åŠ ã—ãªã„ã‚ˆã†ã«ãªã‚‹
+# ’¥Ç’¥£’¥ì’¥¯’¥È’¥ê’¥¹’¥¿’¥Ã’¥¯’¤Ë’Æ±’¤¸’¥Ç’¥£’¥ì’¥¯’¥È’¥ê’¤ò’ÄÉ’²Ã’¤·’¤Ê’¤¤’¤è’¤¦’¤Ë’¤Ê’¤ë
 #setopt pushd_ignore_dups
 
-# pushd ã‚’å¼•æ•°ãªã—ã§å®Ÿè¡Œã—ãŸå ´åˆ pushd $HOME ã¨è¦‹ãªã•ã‚Œã‚‹
+# pushd ’¤ò’°ú’¿ô’¤Ê’¤·’¤Ç’¼Â’¹Ô’¤·’¤¿’¾ì’¹ç pushd $HOME ’¤È’¸«’¤Ê’¤µ’¤ì’¤ë
 #setopt pushd_to_home
 
-# rm * ãªã©ã®éš›ã€æœ¬å½“ã«å…¨ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ¶ˆã—ã¦è‰¯ã„ã‹ã®ç¢ºèªã—ãªã„ã‚ˆã†ã«ãªã‚‹
+# rm * ’¤Ê’¤É’¤Î’ºÝ’¡¢’ËÜ’Åö’¤Ë’Á´’¤Æ’¤Î’¥Õ’¥¡’¥¤’¥ë’¤ò’¾Ã’¤·’¤Æ’ÎÉ’¤¤’¤«’¤Î’³Î’Ç§’¤·’¤Ê’¤¤’¤è’¤¦’¤Ë’¤Ê’¤ë
 #setopt rm_star_silent
 
-# rm_star_silent ã®é€†ã§ã€10 ç§’é–“åå¿œã—ãªããªã‚Šã€é ­ã‚’å†·ã¾ã™æ™‚é–“ãŒä¸Žãˆã‚‰ã‚Œã‚‹
+# rm_star_silent ’¤Î’µÕ’¤Ç’¡¢10 ’ÉÃ’´Ö’È¿’±þ’¤·’¤Ê’¤¯’¤Ê’¤ê’¡¢’Æ¬’¤ò’Îä’¤Þ’¤¹’»þ’´Ö’¤¬’Í¿’¤¨’¤é’¤ì’¤ë
 #setopt rm_star_wait
 
-# for, repeat, select, if, function ãªã©ã§ç°¡ç•¥æ–‡æ³•ãŒä½¿ãˆã‚‹ã‚ˆã†ã«ãªã‚‹
+# for, repeat, select, if, function ’¤Ê’¤É’¤Ç’´Ê’Î¬’Ê¸’Ë¡’¤¬’»È’¤¨’¤ë’¤è’¤¦’¤Ë’¤Ê’¤ë
 setopt short_loops
 
-# ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è¤‡æ•°è¡Œã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ç·¨é›†ã§ã¯ãªãã€ï¼‘è¡Œç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«ãªã‚‹
+# ’¥Ç’¥Õ’¥©’¥ë’¥È’¤Î’Ê£’¿ô’¹Ô’¥³’¥Þ’¥ó’¥É’¥é’¥¤’¥ó’ÊÔ’½¸’¤Ç’¤Ï’¤Ê’¤¯’¡¢’£±’¹Ô’ÊÔ’½¸’¥â’¡¼’¥É’¤Ë’¤Ê’¤ë
 #setopt single_line_zle
 
-# ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ãŒã©ã®ã‚ˆã†ã«å±•é–‹ã•ã‚Œå®Ÿè¡Œã•ã‚ŒãŸã‹ã‚’è¡¨ç¤ºã™ã‚‹ã‚ˆã†ã«ãªã‚‹
+# ’¥³’¥Þ’¥ó’¥É’¥é’¥¤’¥ó’¤¬’¤É’¤Î’¤è’¤¦’¤Ë’Å¸’³«’¤µ’¤ì’¼Â’¹Ô’¤µ’¤ì’¤¿’¤«’¤ò’É½’¼¨’¤¹’¤ë’¤è’¤¦’¤Ë’¤Ê’¤ë
 #setopt xtrace
 
-# è‰²ã‚’ä½¿ã†
+# ’¿§’¤ò’»È’¤¦
 setopt prompt_subst
 
-# ã‚·ã‚§ãƒ«ã®ãƒ—ãƒ­ã‚»ã‚¹ã”ã¨ã«å±¥æ­´ã‚’å…±æœ‰
+# ’¥·’¥§’¥ë’¤Î’¥×’¥í’¥»’¥¹’¤´’¤È’¤Ë’Íú’Îò’¤ò’¶¦’Í­
 setopt share_history
 
-# history (fc -l) ã‚³ãƒžãƒ³ãƒ‰ã‚’ãƒ’ã‚¹ãƒˆãƒªãƒªã‚¹ãƒˆã‹ã‚‰å–ã‚Šé™¤ãã€‚
+# history (fc -l) ’¥³’¥Þ’¥ó’¥É’¤ò’¥Ò’¥¹’¥È’¥ê’¥ê’¥¹’¥È’¤«’¤é’¼è’¤ê’½ü’¤¯’¡£
 setopt hist_no_store
 
-# æ–‡å­—åˆ—æœ«å°¾ã«æ”¹è¡Œã‚³ãƒ¼ãƒ‰ãŒç„¡ã„å ´åˆã§ã‚‚è¡¨ç¤ºã™ã‚‹
+# ’Ê¸’»ú’Îó’Ëö’Èø’¤Ë’²þ’¹Ô’¥³’¡¼’¥É’¤¬’Ìµ’¤¤’¾ì’¹ç’¤Ç’¤â’É½’¼¨’¤¹’¤ë
 unsetopt promptcr
 
-#ã‚³ãƒ”ãƒšã®æ™‚rpromptã‚’éžè¡¨ç¤ºã™ã‚‹
+#’¥³’¥Ô’¥Ú’¤Î’»þrprompt’¤ò’Èó’É½’¼¨’¤¹’¤ë
 setopt transient_rprompt
 
-# cd -[tab] ã§pushd
+# cd -[tab] ’¤Çpushd
 setopt autopushd
 
 autoload -U compinit
@@ -182,7 +274,7 @@ compinit
 PROMPT="%/%% "
 PROMPT2="%_%% "
 SPROMPT="%r is correct? [n,y,a,e]: " 
-#å¤§æ–‡å­—å°æ–‡å­—ç„¡è¦–ã—ã¦è£œå®Œ
+#’Âç’Ê¸’»ú’¾®’Ê¸’»ú’Ìµ’»ë’¤·’¤Æ’Êä’´°
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # auto change directory
 #
