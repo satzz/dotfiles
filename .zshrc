@@ -1,3 +1,19 @@
+# Git branch on RPROMPT
+# refs: http://www.jukie.net/~bart/blog/zsh-git-branch2
+# refs: http://d.hatena.ne.jp/cooldaemon/20080516/1210909583
+function git_branch() {
+local branch
+
+if test -z $(git rev-parse --git-dir 2> /dev/null); then
+branch='---'
+else
+branch="${$(git symbolic-ref HEAD 2> /dev/null)#refs/heads/}"
+fi
+
+echo -n "($branch)"
+}
+RPROMPT='$(git_branch)'
+
 #read settings of fink
 source /sw/bin/init.sh
 
