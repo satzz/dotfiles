@@ -1,3 +1,6 @@
+source ~/.device.sh
+[ -e "${HOME}/.ssh/agent-env" ] && . "${HOME}/.ssh/agent-env"
+=======
 # Git branch on RPROMPT
 # refs: http://www.jukie.net/~bart/blog/zsh-git-branch2
 # refs: http://d.hatena.ne.jp/cooldaemon/20080516/1210909583
@@ -14,11 +17,8 @@ echo -n "($branch)"
 }
 RPROMPT='$(git_branch)'
 
-#read settings of fink
-source /sw/bin/init.sh
 
 export PATH=$HOME/.gem/ruby/1.8/bin:$HOME/bin:/opt/local/bin:$PATH:/usr/local/lib/gcc-lib:/usr/local/bin:/usr/local/mysql/bin
-export HOSTNAME=apple-of-satzz
 #’»þ’´Ö’Æâ’¤Ë’²¿’ÅÙKeychain’¤ò’¼Â’¹Ô’¤·’¤¿’¤«’¤Ë’´Ø’·¸’¤Ê’¤¯’¡¤30’Ê¬’¤Çssh-agent’¤¬’½ª’Î»’¤¹’¤ë’¤è’¤¦’¤Ë’¤Ê’¤ë
 # keychain --timeout 1 ~/.ssh/id_dsa  # ’Èë’Ì©’¸°
 # source ~/.keychain/$HOSTNAME-sh
