@@ -1,6 +1,5 @@
 source ~/.device.sh
 [ -e "${HOME}/.ssh/agent-env" ] && . "${HOME}/.ssh/agent-env"
-=======
 # Git branch on RPROMPT
 # refs: http://www.jukie.net/~bart/blog/zsh-git-branch2
 # refs: http://d.hatena.ne.jp/cooldaemon/20080516/1210909583
