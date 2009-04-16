@@ -1,3 +1,35 @@
+
+;æ‹¡å¼µå­ãŒrã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚“ã ã‚‰è‡ªå‹•çš„ã«R-modeã«ãªã‚‹è¨­å®š
+
+(setq auto-mode-alist
+     (cons (cons "\\.r$" 'R-mode) auto-mode-alist))
+(autoload 'R-mode "ess-site" "Emacs Speaks Statistics mode" t)
+
+;è‰²åˆ†ã‘
+;(set-default-font "-adobe-courier-bold-r-normal--*-140-*-*-m-*-iso8859-1")
+(global-font-lock-mode t)                                        ; S/R   TeX
+(set-face-foreground 'font-lock-comment-face       "Firebrick")  ; #com  %com
+(set-face-foreground 'font-lock-string-face         "SeaGreen")  ; "str" "str"
+(set-face-foreground 'font-lock-keyword-face      "MediumBlue")  ; if    \end
+(set-face-foreground 'font-lock-constant-face      "VioletRed")  ; fun<- {ctr}
+(set-face-foreground 'font-lock-type-face      "DarkGoldenrod")  ; T,F    ?
+(set-face-foreground 'font-lock-variable-name-face      "Blue")  ; xv
+(set-face-foreground 'font-lock-function-name-face "VioletRed")  ; <-    {eq1}
+
+;use emacs-rails mode
+(setq auto-mode-alist  (cons '("\\.rhtml$" . ruby-mode) auto-mode-alist))
+(require 'rails)
+(define-key rails-minor-mode-map "\C-c\C-p" 'rails-lib:run-primary-switch)
+(define-key rails-minor-mode-map "\C-c\C-n" 'rails-lib:run-secondary-switch)
+(defun try-complete-abbrev (old)
+  (if (expand-abbrev) t nil)) 
+(setq hippie-expand-try-functions-list
+      '(try-complete-abbrev
+        try-complete-file-name
+        try-expand-dabbrev))
+
+
+(server-start)
 ;;
 (menu-bar-mode -1)
 (tool-bar-mode 0)
@@ -10,16 +42,37 @@
 (add-to-load-path "/usr/share/emacs/site-lisp")
 
 (require 'auto-save-buffers)
-(run-with-idle-timer 0.3 t 'auto-save-buffers) 
+(run-with-idle-timer 0.5 t 'auto-save-buffers) 
+
+
+;; http://d.hatena.ne.jp/rubikitch/20070725#1186048100
+;; http://dev.ariel-networks.com/Members/matsuyama/open-anything-emacs
+(require 'anything-config)
+
+(setq anything-sources (list anything-c-source-buffers
+                             anything-c-source-file-name-history
+                             anything-c-source-info-pages
+                             anything-c-source-man-pages
+                             anything-c-source-locate
+                             anything-c-source-emacs-commands
+                                        ; anything-source-buffers 
+                                        ; anything-source-bookmarks 
+                             ;;anything-source-recentf
+                                        ; anything-source-file-name-history
+                                        ; anything-source-locate-r
+                                        ; anything-source-complex-command-history
+                             ))
+;(setq anything-type-actions (list anything-actions-buffer
+;                                  anything-actions-file
+;                                  anything-actions-sexp))
 
 ;; http://d.hatena.ne.jp/antipop/20081120/1227180641
 (require 'outputz)
-(setq outputz-key "fukkatsunojumon")      ;; Éü³è¤Î¼öÊ¸
-(setq outputz-uri "http://appleofsatzz.com/%s") ;; Å¬Åö¤ÊURL¡£%s¤Ëmajor-mode¤ÎÌ¾Á°¤¬Æş¤ë¤Î¤Ç¡¢major-mode¤´¤È¤ÎURL¤ÇÅê¹Æ¤Ç¤­¤Ş¤¹¡£
+(setq outputz-uri "http://localsatzz.com/%s") ;; é©å½“ãªURLã€‚%sã«major-modeã®åå‰ãŒå…¥ã‚‹ã®ã§ã€major-modeã”ã¨ã®URLã§æŠ•ç¨¿ã§ãã¾ã™ã€‚
 (global-outputz-mode t)
 
 ;; http://d.hatena.ne.jp/yaotti/20081121/1227252525
-;auto-save-buffers¤ò»È¤Ã¤Æ¤¤¤ë¿Í¤Î¤¿¤á¤Îoutputz.el¤ÎÀßÄê
+;auto-save-buffersã‚’ä½¿ã£ã¦ã„ã‚‹äººã®ãŸã‚ã®outputz.elã®è¨­å®š
 (remove-hook 'after-save-hook 'outputz)
 (add-hook 'kill-buffer-hook 'outputz)
 (defvar my-before-kill-emacs-hook nil
@@ -31,7 +84,7 @@
 (add-hook 'my-before-kill-emacs-hook 'outputz-buffers)
 (defadvice save-buffers-kill-emacs (around before-kill-hook activate)
   (run-hooks 'my-before-kill-emacs-hook)
-  (sleep-for 1) ;;¤È¤ê¤¢¤¨¤º
+  (sleep-for 1) ;;ã¨ã‚Šã‚ãˆãš
   ad-do-it)
 
 
@@ -72,22 +125,22 @@
 ;; (add-hook 'cperl-mode-hook '(lambda () (flymake-perl-load)))
 
 
-;; flymake (Emacs22¤«¤éÉ¸½àÅºÉÕ¤µ¤ì¤Æ¤¤¤ë)
+;; flymake (Emacs22ã‹ã‚‰æ¨™æº–æ·»ä»˜ã•ã‚Œã¦ã„ã‚‹)
 (require 'flymake)
 
 ;; set-perl5lib
-;; ³«¤¤¤¿¥¹¥¯¥ê¥×¥È¤Î¥Ñ¥¹¤Ë±ş¤¸¤Æ¡¢@INC¤Ëlib¤òÄÉ²Ã¤·¤Æ¤¯¤ì¤ë
-;; °Ê²¼¤«¤é¥À¥¦¥ó¥í¡¼¥É¤¹¤ëÉ¬Í×¤¢¤ê
+;; é–‹ã„ãŸã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ‘ã‚¹ã«å¿œã˜ã¦ã€@INCã«libã‚’è¿½åŠ ã—ã¦ãã‚Œã‚‹
+;; ä»¥ä¸‹ã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹å¿…è¦ã‚ã‚Š
 ;; http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
 (require 'set-perl5lib)
 
-;; ¥¨¥é¡¼¡¢¥¦¥©¡¼¥Ë¥ó¥°»ş¤Î¥Õ¥§¥¤¥¹
+;; ã‚¨ãƒ©ãƒ¼ã€ã‚¦ã‚©ãƒ¼ãƒ‹ãƒ³ã‚°æ™‚ã®ãƒ•ã‚§ã‚¤ã‚¹
 (set-face-background 'flymake-errline "red4")
 (set-face-foreground 'flymake-errline "black")
 (set-face-background 'flymake-warnline "yellow")
 (set-face-foreground 'flymake-warnline "black")
 
-;; ¥¨¥é¡¼¤ò¥ß¥Ë¥Ğ¥Ã¥Õ¥¡¤ËÉ½¼¨
+;; ã‚¨ãƒ©ãƒ¼ã‚’ãƒŸãƒ‹ãƒãƒƒãƒ•ã‚¡ã«è¡¨ç¤º
 ;; http://d.hatena.ne.jp/xcezx/20080314/1205475020
 (defun flymake-display-err-minibuf ()
   "Displays the error/warning for the current line in the minibuffer"
@@ -104,7 +157,7 @@
           (message "[%s] %s" line text)))
       (setq count (1- count)))))
 
-;; PerlÍÑÀßÄê
+;; Perlç”¨è¨­å®š
 ;; http://unknownplace.org/memo/2007/12/21#e001
 (defvar flymake-perl-err-line-patterns
   '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
@@ -138,15 +191,15 @@
 ;emacs-w3m
 ;(require 'w3m-load)
 
-;; ¹Ô¿ôÉ½¼¨
+;; è¡Œæ•°è¡¨ç¤º
 (line-number-mode t)
-;; ·åÈÖ¹æ
+;; æ¡ç•ªå·
 (column-number-mode t)
 
-;; ¥¹¥¿¡¼¥È¥¢¥Ã¥×¥Ú¡¼¥¸¤òÉ½¼¨¤·¤Ê¤¤
+;; ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ãªã„
 (setq inhibit-startup-message t)
 
-;; ¥Ğ¥Ã¥¯¥¢¥Ã¥×¥Õ¥¡¥¤¥ë¤òºî¤é¤Ê¤¤
+;; ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‰ãªã„
 (setq backup-inhibited t)
 
 (when (eq window-system 'mac)
@@ -163,7 +216,7 @@
       (set-frame-parameter nil 'fullscreen nil)
     (set-frame-parameter nil 'fullscreen 'fullboth)))
 
-;; Carbon Emacs¤ÎÀßÄê¤ÇÆş¤ì¤é¤ì¤¿. ¥á¥Ë¥å¡¼¤ò±£¤·¤¿¤ê¡¥
+;; Carbon Emacsã®è¨­å®šã§å…¥ã‚Œã‚‰ã‚ŒãŸ. ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’éš ã—ãŸã‚Šï¼
 (custom-set-variables
  '(display-time-mode t)
  '(tool-bar-mode nil)
@@ -179,17 +232,17 @@
    (set-frame-parameter nil 'alpha 75)
    ))
 
-;; ¥¦¥£¥ó¥É¥¦¤òÆ©ÌÀ²½
+;; ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é€æ˜åŒ–
 ;(add-to-list 'default-frame-alist '(alpha . (0.85 0.85)))
 
-;; ¥¦¥£¥ó¥É¥¦¤òºÇÂç²½
+;; ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æœ€å¤§åŒ–
 (mac-toggle-max-window)
 
-;; »ş¹ï¤òÉ½¼¨
+;; æ™‚åˆ»ã‚’è¡¨ç¤º
 (setq display-time-day-and-date t)
 (display-time)
 
-;; ¥Õ¥©¥ó¥ÈÀßÄê
+;; ãƒ•ã‚©ãƒ³ãƒˆè¨­å®š
 ;(if (eq window-system 'mac) (require 'carbon-font))
 ;(fixed-width-set-fontset "hirakaku_w3" 10)
 ;(setq fixed-width-rescale nil)
@@ -232,29 +285,29 @@
 
 (setq truncate-partial-width-windows nil)
 (set-language-environment 'Japanese)
-(set-default-coding-systems 'euc-jp-unix)
-(set-keyboard-coding-system 'euc-jp)
-(set-buffer-file-coding-system 'euc-jp)
-(if (not window-system) (set-terminal-coding-system 'euc-jp))
+(set-default-coding-systems 'utf-8-unix)
+(set-keyboard-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
+(if (not window-system) (set-terminal-coding-system 'utf-8))
 (setq process-coding-system-alist
      (cons
      '(".*" euc-jp . euc-jp)
       process-coding-system-alist))
 
 (global-font-lock-mode t)
-(setq-default transient-mark-mode t); °ì»ş¥Ş¡¼¥¯¥â¡¼¥É¤Î¼«Æ°Í­¸ú²½
+(setq-default transient-mark-mode t); ä¸€æ™‚ãƒãƒ¼ã‚¯ãƒ¢ãƒ¼ãƒ‰ã®è‡ªå‹•æœ‰åŠ¹åŒ–
 (setq highlight-nonselected-windows t)
-; C-x C-u ¤¬²¿¤â¤·¤Ê¤¤¤è¤¦¤ËÊÑ¹¹¤¹¤ë
+; C-x C-u ãŒä½•ã‚‚ã—ãªã„ã‚ˆã†ã«å¤‰æ›´ã™ã‚‹
 (global-unset-key "\C-x\C-u")
-(show-paren-mode 1) ;³ç¸Ì¤ÎÂĞ±ş¤ò¥Ï¥¤¥é¥¤¥È.
-(setq next-line-add-newlines nil) ;¥Ğ¥Ã¥Õ¥¡ËöÈø¤ËÍ¾·×¤Ê²ş¹Ô¥³¡¼¥É¤òËÉ¤°¤¿¤á¤ÎÀßÄê
-(define-key ctl-x-map "l" 'goto-line) ; C-l ¤Ç goto-line ¤ò¼Â¹Ô
-; C-h ¤Ç¥«¡¼¥½¥ë¤Îº¸¤Ë¤¢¤ëÊ¸»ú¤ò¾Ã¤¹
+(show-paren-mode 1) ;æ‹¬å¼§ã®å¯¾å¿œã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆ.
+(setq next-line-add-newlines nil) ;ãƒãƒƒãƒ•ã‚¡æœ«å°¾ã«ä½™è¨ˆãªæ”¹è¡Œã‚³ãƒ¼ãƒ‰ã‚’é˜²ããŸã‚ã®è¨­å®š
+(define-key ctl-x-map "l" 'goto-line) ; C-l ã§ goto-line ã‚’å®Ÿè¡Œ
+; C-h ã§ã‚«ãƒ¼ã‚½ãƒ«ã®å·¦ã«ã‚ã‚‹æ–‡å­—ã‚’æ¶ˆã™
 (define-key global-map "\C-h" 'delete-backward-char)
-; C-o ¤ËÆ°ÅªÎ¬¸ìÅ¸³«µ¡Ç½¤ò³ä¤êÅö¤Æ¤ë
+; C-o ã«å‹•çš„ç•¥èªå±•é–‹æ©Ÿèƒ½ã‚’å‰²ã‚Šå½“ã¦ã‚‹
 (define-key global-map "\C-o" 'dabbrev-expand)
-(setq dabbrev-case-fold-search nil) ; ÂçÊ¸»ú¾®Ê¸»ú¤ò¶èÊÌ
-;; ÆüËÜ¸ì¡¦±Ñ¸ìº®¤¸¤êÊ¸¤Ç¤Î¶èÀÚÈ½Äê
+(setq dabbrev-case-fold-search nil) ; å¤§æ–‡å­—å°æ–‡å­—ã‚’åŒºåˆ¥
+;; æ—¥æœ¬èªãƒ»è‹±èªæ··ã˜ã‚Šæ–‡ã§ã®åŒºåˆ‡åˆ¤å®š
 (defadvice dabbrev-expand
   (around modify-regexp-for-japanese activate compile)
   "Modify `dabbrev-abbrev-char-regexp' dynamically for Japanese words."
@@ -308,10 +361,10 @@
 
 
 ;;====================================
-;;; ÀŞ¤êÊÖ¤·É½¼¨ON/OFF
+;;; æŠ˜ã‚Šè¿”ã—è¡¨ç¤ºON/OFF
 ;;====================================
 (defun toggle-truncate-lines ()
-  "ÀŞ¤êÊÖ¤·É½¼¨¤ò¥È¥°¥ëÆ°ºî¤·¤Ş¤¹."
+  "æŠ˜ã‚Šè¿”ã—è¡¨ç¤ºã‚’ãƒˆã‚°ãƒ«å‹•ä½œã—ã¾ã™."
   (interactive)
   (if truncate-lines
       (setq truncate-lines nil)
@@ -319,4 +372,4 @@
   (recenter))
 
 
-(global-set-key "\C-c\C-l" 'toggle-truncate-lines) ; ÀŞ¤êÊÖ¤·É½¼¨ON/OFF
+(global-set-key "\C-c\C-l" 'toggle-truncate-lines) ; æŠ˜ã‚Šè¿”ã—è¡¨ç¤ºON/OFF
