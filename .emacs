@@ -1,3 +1,14 @@
+(cond
+ ((string-match "apple-darwin" system-configuration)
+  ;;ここに Mac の設定を書く
+  )
+ ((string-match "linux" system-configuration)
+  ;;ここに Linux での設定を書く
+  )
+ ((string-match "mingw" system-configuration)
+  ;;ここに Windows での設定を書く
+  )
+ )                                      ; 
 
 ;拡張子がrのファイルを読み込んだら自動的にR-modeになる設定
 
