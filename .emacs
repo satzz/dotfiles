@@ -96,6 +96,12 @@
 (setq js2-use-font-lock-faces t)
 
 
+; C++モードでは flymakeを有効にする
+; http://www.02.246.ne.jp/~torutk/cxx/emacs/flymake.html#
+(add-hook 'c++-mode-hook
+                  '(lambda ()
+                         (flymake-mode t)))
+
 ;; ;;flymake for perl
 ;; ;;http://unknownplace.org/memo/2007/12/21
 ;; (require 'flymake)
