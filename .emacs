@@ -1,6 +1,20 @@
+;OSごとの設定
 (cond
  ((string-match "apple-darwin" system-configuration)
   ;;ここに Mac の設定を書く
+  (when (eq window-system 'mac)
+    (add-hook 'window-setup-hook
+              (lambda ()
+                ;;              (setq mac-autohide-menubar-on-maximize t)
+                (set-frame-parameter nil 'fullscreen 'fullboth)
+                )))
+
+  (defun mac-toggle-max-window ()
+    (interactive)
+    (if (frame-parameter nil 'fullscreen)
+        (set-frame-parameter nil 'fullscreen nil)
+      (set-frame-parameter nil 'fullscreen 'fullboth)))
+
   )
  ((string-match "linux" system-configuration)
   ;;ここに Linux での設定を書く
@@ -219,19 +233,6 @@
 ;; バックアップファイルを作らない
 (setq backup-inhibited t)
 
-(when (eq window-system 'mac)
-  (add-hook 'window-setup-hook
-            (lambda ()
-;;              (setq mac-autohide-menubar-on-maximize t)
-              (set-frame-parameter nil 'fullscreen 'fullboth)
-              )))
-
-
-(defun mac-toggle-max-window ()
-  (interactive)
-  (if (frame-parameter nil 'fullscreen)
-      (set-frame-parameter nil 'fullscreen nil)
-    (set-frame-parameter nil 'fullscreen 'fullboth)))
 
 ;; Carbon Emacsの設定で入れられた. メニューを隠したり．
 (custom-set-variables
