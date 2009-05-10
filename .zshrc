@@ -85,7 +85,7 @@ preexec() {
 		    uri=http://sed.localhost/
         elif my_perl_like_match '/^awk/', $command; then
 		    uri=http://awk.localhost/
-        elif my_perl_like_match '/^(gcc|gdb)/', $command; then
+        elif my_perl_like_match '/^(g\+\+|gcc|gdb)/', $command; then
 		    uri=http://c.localhost/
         elif my_perl_like_match '/^(ruby|rails|gem|rake)/', $command; then
 		    uri=http://ruby.localhost/
