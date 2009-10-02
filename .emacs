@@ -1,3 +1,13 @@
+(display-battery-mode t)
+
+; egg: an interface to git
+(require 'egg)
+
+; for shell mode (M-x shell)
+(autoload 'ansi-color-for-comint-mode-on "ansi-color"
+  "Set `ansi-color-for-comint-mode' to t." t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
 ;OSごとの設定
 (cond
  ((string-match "apple-darwin" system-configuration)
@@ -35,10 +45,10 @@
 (global-font-lock-mode t)                                        ; S/R   TeX
 (set-face-foreground 'font-lock-comment-face       "Firebrick")  ; #com  %com
 (set-face-foreground 'font-lock-string-face         "SeaGreen")  ; "str" "str"
-(set-face-foreground 'font-lock-keyword-face      "MediumBlue")  ; if    \end
+(set-face-foreground 'font-lock-keyword-face      "Green")  ; if    \end
 (set-face-foreground 'font-lock-constant-face      "VioletRed")  ; fun<- {ctr}
 (set-face-foreground 'font-lock-type-face      "DarkGoldenrod")  ; T,F    ?
-(set-face-foreground 'font-lock-variable-name-face      "Blue")  ; xv
+(set-face-foreground 'font-lock-variable-name-face "LightBlue")  ; xv
 (set-face-foreground 'font-lock-function-name-face "VioletRed")  ; <-    {eq1}
 
 ;use emacs-rails mode
@@ -247,7 +257,7 @@
    (set-background-color "Black")
    (set-foreground-color "LightGray")
    (set-cursor-color "Gray")
-   (set-frame-parameter nil 'alpha 75)
+   (set-frame-parameter nil 'alpha 85)
    ))
 
 ;; ウィンドウを透明化
