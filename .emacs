@@ -1,4 +1,4 @@
-(display-battery-mode t)
+
 
 ; egg: an interface to git
 (require 'egg)
@@ -25,6 +25,7 @@
         (set-frame-parameter nil 'fullscreen nil)
       (set-frame-parameter nil 'fullscreen 'fullboth)))
 
+  (display-battery-mode t)
   )
  ((string-match "linux" system-configuration)
   ;;ここに Linux での設定を書く
