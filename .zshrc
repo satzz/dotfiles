@@ -1,4 +1,4 @@
-source ~/.device.sh
+# source ~/.device.sh
 [ -e "${HOME}/.ssh/agent-env" ] && . "${HOME}/.ssh/agent-env"
 # Git branch on RPROMPT
 # refs: http://www.jukie.net/~bart/blog/zsh-git-branch2
@@ -128,8 +128,8 @@ preexec() {
 		    uri=http://zsh.localhost/
         fi
 
-        key=`ruby -rubygems -e 'require "pit";print Pit.get("outputz.com")["key"]'`
-        curl -s http://outputz.com/api/post -F key=${key} -F uri=${uri} -F size=${#1} >/dev/null
+        # key=`ruby -rubygems -e 'require "pit";print Pit.get("outputz.com")["key"]'`
+        # curl -s http://outputz.com/api/post -F key=${key} -F uri=${uri} -F size=${#1} >/dev/null
     fi
 }
 
