@@ -1,7 +1,7 @@
 (display-battery-mode t)
 
 ; egg: an interface to git
-(require 'egg)
+; (require 'egg)
 
 ; for shell mode (M-x shell)
 (autoload 'ansi-color-for-comint-mode-on "ansi-color"
