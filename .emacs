@@ -25,7 +25,7 @@
         (set-frame-parameter nil 'fullscreen nil)
       (set-frame-parameter nil 'fullscreen 'fullboth)))
 
-  (mac-toggle-max-window)
+
 
   )
  ((string-match "linux" system-configuration)
@@ -400,3 +400,5 @@
 (set-text-properties 0 (length new) nil new)
 ad-do-it))
 
+;; maximize the window in last
+(mac-toggle-max-window)
