@@ -401,3 +401,11 @@
 
 
 (global-set-key "\C-c\C-l" 'toggle-truncate-lines) ; 折り返し表示ON/OFF
+
+;; Zen Coding Mode
+(require 'zencoding-mode)
+(add-hook 'sgml-mode-hook 'zencoding-mode)
+(add-hook 'html-mode-hook 'zencoding-mode)
+(add-hook 'text-mode-hook 'zencoding-mode)
+(define-key zencoding-mode-keymap "\C-i" 'zencoding-expand-line)
+
