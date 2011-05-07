@@ -261,8 +261,6 @@
    (set-frame-parameter nil 'alpha 85)
    ))
 
-;; ウィンドウを透明化
-;(add-to-list 'default-frame-alist '(alpha . (0.85 0.85)))
 
 ;; ウィンドウを最大化
 (mac-toggle-max-window)
@@ -388,6 +386,7 @@
 
 (add-to-list 'default-frame-alist '(alpha . (0.85 0.85)))
 
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 ;;====================================
 ;;; 折り返し表示ON/OFF
