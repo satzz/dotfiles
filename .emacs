@@ -2,10 +2,6 @@
 ; egg: an interface to git
 ; (require 'egg)
 
-; for shell mode (M-x shell)
-(autoload 'ansi-color-for-comint-mode-on "ansi-color"
-  "Set `ansi-color-for-comint-mode' to t." t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 
 (cond
@@ -252,6 +248,11 @@
 
 (display-battery-mode t)
 
+
+; for shell mode (M-x shell)
+(autoload 'ansi-color-for-comint-mode-on "ansi-color"
+  "Set `ansi-color-for-comint-mode' to t." t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;;Color
 (if window-system (progn
