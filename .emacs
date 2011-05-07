@@ -1,4 +1,3 @@
-(display-battery-mode t)
 
 ; egg: an interface to git
 ; (require 'egg)
@@ -248,6 +247,12 @@
 (custom-set-faces
  )
 
+(setq display-time-day-and-date t)
+(display-time)
+
+(display-battery-mode t)
+
+
 ;;Color
 (if window-system (progn
    (set-background-color "Black")
@@ -258,8 +263,6 @@
 
 
 
-(setq display-time-day-and-date t)
-(display-time)
 
 ;(if (eq window-system 'mac) (require 'carbon-font))
 ;(fixed-width-set-fontset "hirakaku_w3" 10)
