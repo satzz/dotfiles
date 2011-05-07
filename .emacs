@@ -409,3 +409,10 @@
 (add-hook 'text-mode-hook 'zencoding-mode)
 (define-key zencoding-mode-keymap "\C-i" 'zencoding-expand-line)
 
+;; filter rich texts from office documents
+;; http://d.hatena.ne.jp/librarius_I/20110214/1297643472
+(defadvice kill-new (around my-kill-ring-disable-text-property activate)
+(let ((new (ad-get-arg 0)))
+(set-text-properties 0 (length new) nil new)
+ad-do-it))
+
