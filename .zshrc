@@ -370,5 +370,10 @@ SAVEHIST=100000
 setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
 
+if [[ -s $HOME/.rvm/scripts/rvm ]]; then
+
+    source $HOME/.rvm/scripts/rvm
+
+fi
 
 alias r=rails
