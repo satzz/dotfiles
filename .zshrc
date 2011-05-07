@@ -1,4 +1,3 @@
-# source ~/.device.sh
 [ -e "${HOME}/.ssh/agent-env" ] && . "${HOME}/.ssh/agent-env"
 # Git branch on RPROMPT
 # refs: http://www.jukie.net/~bart/blog/zsh-git-branch2
@@ -17,14 +16,12 @@ echo -n "($branch)"
 }
 RPROMPT='$(git_branch)'
 
-
-export PATH=$HOME/.gem/ruby/1.8/bin:$HOME/bin:/opt/local/bin:$PATH:/usr/local/lib/gcc-lib:/usr/local/bin:/usr/local/mysql/bin
-#’»þ’´Ö’Æâ’¤Ë’²¿’ÅÙKeychain’¤ò’¼Â’¹Ô’¤·’¤¿’¤«’¤Ë’´Ø’·¸’¤Ê’¤¯’¡¤30’Ê¬’¤Çssh-agent’¤¬’½ª’Î»’¤¹’¤ë’¤è’¤¦’¤Ë’¤Ê’¤ë
-# keychain --timeout 1 ~/.ssh/id_dsa  # ’Èë’Ì©’¸°
+# keychain --timeout 1 ~/.ssh/id_dsa  
 # source ~/.keychain/$HOSTNAME-sh
 # based by http://devel.aquahill.net/zsh/zshoptions
 
 export EDITOR="vi"
+
 
 # http://d.hatena.ne.jp/amt/20070423/MyPerlLikeMatch
 my_perl_like_match() { # perl ’É÷’Àµ’µ¬’É½’¸½’¥Þ’¥Ã’¥Á
@@ -128,8 +125,8 @@ preexec() {
 		    uri=http://zsh.localhost/
         fi
 
-        # key=`ruby -rubygems -e 'require "pit";print Pit.get("outputz.com")["key"]'`
-        # curl -s http://outputz.com/api/post -F key=${key} -F uri=${uri} -F size=${#1} >/dev/null
+#         key=`ruby -rubygems -e 'require "pit";print Pit.get("outputz.com")["key"]'`
+#         curl -s http://outputz.com/api/post -F key=${key} -F uri=${uri} -F size=${#1} >/dev/null
     fi
 }
 
