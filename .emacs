@@ -1,4 +1,4 @@
-
+(display-battery-mode t)
 
 ; egg: an interface to git
 (require 'egg)
@@ -8,10 +8,10 @@
   "Set `ansi-color-for-comint-mode' to t." t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-;OSごとの設定
+
 (cond
  ((string-match "apple-darwin" system-configuration)
-  ;;ここに Mac の設定を書く
+  ;;mac configs
   (when (eq window-system 'mac)
     (add-hook 'window-setup-hook
               (lambda ()
@@ -25,23 +25,23 @@
         (set-frame-parameter nil 'fullscreen nil)
       (set-frame-parameter nil 'fullscreen 'fullboth)))
 
-  (display-battery-mode t)
+  (mac-toggle-max-window)
+
   )
  ((string-match "linux" system-configuration)
-  ;;ここに Linux での設定を書く
+  ;;linux configs
   )
  ((string-match "mingw" system-configuration)
-  ;;ここに Windows での設定を書く
+  ;;windows configs
   )
  )                                      ; 
 
-;拡張子がrのファイルを読み込んだら自動的にR-modeになる設定
+;r-mode
 
 (setq auto-mode-alist
      (cons (cons "\\.r$" 'R-mode) auto-mode-alist))
 (autoload 'R-mode "ess-site" "Emacs Speaks Statistics mode" t)
 
-;色分け
 ;(set-default-font "-adobe-courier-bold-r-normal--*-140-*-*-m-*-iso8859-1")
 (global-font-lock-mode t)                                        ; S/R   TeX
 (set-face-foreground 'font-lock-comment-face       "Firebrick")  ; #com  %com
@@ -104,11 +104,11 @@
 
 ;; http://d.hatena.ne.jp/antipop/20081120/1227180641
 (require 'outputz)
-(setq outputz-uri "http://localsatzz.com/%s") ;; 適当なURL。%sにmajor-modeの名前が入るので、major-modeごとのURLで投稿できます。
+(setq outputz-uri "http://localsatzz.com/%s");; post for each major-mode
 (global-outputz-mode t)
 
 ;; http://d.hatena.ne.jp/yaotti/20081121/1227252525
-;auto-save-buffersを使っている人のためのoutputz.elの設定
+;auto-save-buffers x outputz.el
 (remove-hook 'after-save-hook 'outputz)
 (add-hook 'kill-buffer-hook 'outputz)
 (defvar my-before-kill-emacs-hook nil
@@ -120,7 +120,7 @@
 (add-hook 'my-before-kill-emacs-hook 'outputz-buffers)
 (defadvice save-buffers-kill-emacs (around before-kill-hook activate)
   (run-hooks 'my-before-kill-emacs-hook)
-  (sleep-for 1) ;;とりあえず
+  (sleep-for 1) ;;FIX ME?
   ad-do-it)
 
 
@@ -132,7 +132,7 @@
 (setq js2-use-font-lock-faces t)
 
 
-; C++モードでは flymakeを有効にする
+; C++ mode x flymake
 ; http://www.02.246.ne.jp/~torutk/cxx/emacs/flymake.html#
 (add-hook 'c++-mode-hook
                   '(lambda ()
@@ -167,22 +167,21 @@
 ;; (add-hook 'cperl-mode-hook '(lambda () (flymake-perl-load)))
 
 
-;; flymake (Emacs22から標準添付されている)
+;; flymake
 (require 'flymake)
 
 ;; set-perl5lib
-;; 開いたスクリプトのパスに応じて、@INCにlibを追加してくれる
-;; 以下からダウンロードする必要あり
+;; add lib to @INC for the opened script path
 ;; http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
 (require 'set-perl5lib)
 
-;; エラー、ウォーニング時のフェイス
+;; error/warning face
 (set-face-background 'flymake-errline "red4")
 (set-face-foreground 'flymake-errline "black")
 (set-face-background 'flymake-warnline "yellow")
 (set-face-foreground 'flymake-warnline "black")
 
-;; エラーをミニバッファに表示
+;; show errors in mini buffer
 ;; http://d.hatena.ne.jp/xcezx/20080314/1205475020
 (defun flymake-display-err-minibuf ()
   "Displays the error/warning for the current line in the minibuffer"
@@ -199,7 +198,7 @@
           (message "[%s] %s" line text)))
       (setq count (1- count)))))
 
-;; Perl用設定
+;; flymake x perl
 ;; http://unknownplace.org/memo/2007/12/21#e001
 (defvar flymake-perl-err-line-patterns
   '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
@@ -233,19 +232,15 @@
 ;emacs-w3m
 ;(require 'w3m-load)
 
-;; 行数表示
 (line-number-mode t)
-;; 桁番号
 (column-number-mode t)
 
-;; スタートアップページを表示しない
 (setq inhibit-startup-message t)
 
-;; バックアップファイルを作らない
 (setq backup-inhibited t)
 
 
-;; Carbon Emacsの設定で入れられた. メニューを隠したり．
+;; inhibit Carbon-Emacs menus
 (custom-set-variables
  '(display-time-mode t)
  '(tool-bar-mode nil)
@@ -258,18 +253,14 @@
    (set-background-color "Black")
    (set-foreground-color "LightGray")
    (set-cursor-color "Gray")
-   (set-frame-parameter nil 'alpha 85)
+   (set-frame-parameter nil 'alpha 75)
    ))
 
 
-;; ウィンドウを最大化
-(mac-toggle-max-window)
 
-;; 時刻を表示
 (setq display-time-day-and-date t)
 (display-time)
 
-;; フォント設定
 ;(if (eq window-system 'mac) (require 'carbon-font))
 ;(fixed-width-set-fontset "hirakaku_w3" 10)
 ;(setq fixed-width-rescale nil)
@@ -322,19 +313,16 @@
       process-coding-system-alist))
 
 (global-font-lock-mode t)
-(setq-default transient-mark-mode t); 一時マークモードの自動有効化
+(setq-default transient-mark-mode t)
 (setq highlight-nonselected-windows t)
-; C-x C-u が何もしないように変更する
 (global-unset-key "\C-x\C-u")
-(show-paren-mode 1) ;括弧の対応をハイライト.
-(setq next-line-add-newlines nil) ;バッファ末尾に余計な改行コードを防ぐための設定
-(define-key ctl-x-map "l" 'goto-line) ; C-l で goto-line を実行
-; C-h でカーソルの左にある文字を消す
+(show-paren-mode 1) ;highlight parens
+(setq next-line-add-newlines nil) 
+(define-key ctl-x-map "l" 'goto-line) ; C-l
 (define-key global-map "\C-h" 'delete-backward-char)
-; C-o に動的略語展開機能を割り当てる
-(define-key global-map "\C-o" 'dabbrev-expand)
-(setq dabbrev-case-fold-search nil) ; 大文字小文字を区別
-;; 日本語・英語混じり文での区切判定
+(define-key global-map "\C-o" 'dabbrev-expand); dynamic abbrev
+(setq dabbrev-case-fold-search nil) ; case sensitive search
+
 (defadvice dabbrev-expand
   (around modify-regexp-for-japanese activate compile)
   "Modify `dabbrev-abbrev-char-regexp' dynamically for Japanese words."
@@ -388,11 +376,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
-;;====================================
-;;; 折り返し表示ON/OFF
-;;====================================
 (defun toggle-truncate-lines ()
-  "折り返し表示をトグル動作します."
   (interactive)
   (if truncate-lines
       (setq truncate-lines nil)
@@ -400,7 +384,7 @@
   (recenter))
 
 
-(global-set-key "\C-c\C-l" 'toggle-truncate-lines) ; 折り返し表示ON/OFF
+(global-set-key "\C-c\C-l" 'toggle-truncate-lines) 
 
 ;; Zen Coding Mode
 (require 'zencoding-mode)
