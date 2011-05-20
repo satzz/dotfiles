@@ -47,6 +47,14 @@
 (set-face-foreground 'font-lock-variable-name-face "LightBlue")  ; xv
 (set-face-foreground 'font-lock-function-name-face "VioletRed")  ; <-    {eq1}
 
+;; Add-to-load-path                                                                                                                                                                
+(defun add-to-load-path (&rest paths)
+  (mapc '(lambda (path)
+                   (add-to-list 'load-path path))
+                (mapcar 'expand-file-name paths)))
+(add-to-load-path "/usr/share/emacs/site-lisp")
+(add-to-load-path "/home/samba/site-lisp")
+(add-to-load-path "/home/samba/site-lisp/emacs-rails")
 ;use emacs-rails mode
 (setq auto-mode-alist  (cons '("\\.rhtml$" . ruby-mode) auto-mode-alist))
 (require 'rails)
@@ -65,12 +73,8 @@
 (menu-bar-mode -1)
 (tool-bar-mode 0)
 
-;; Add-to-load-path                                                                                                                                                                
-(defun add-to-load-path (&rest paths)
-  (mapc '(lambda (path)
-                   (add-to-list 'load-path path))
-                (mapcar 'expand-file-name paths)))
-(add-to-load-path "/usr/share/emacs/site-lisp")
+
+
 
 (require 'auto-save-buffers)
 (run-with-idle-timer 0.5 t 'auto-save-buffers) 
