@@ -6,7 +6,10 @@
 
 (cond
  ((string-match "apple-darwin" system-configuration)
+
   ;;mac configs
+  (display-battery-mode t)
+
   (when (eq window-system 'mac)
     (add-hook 'window-setup-hook
               (lambda ()
@@ -248,7 +251,6 @@
 (setq display-time-day-and-date t)
 (display-time)
 
-(display-battery-mode t)
 
 
 ; for shell mode (M-x shell)
