@@ -22,14 +22,15 @@
 
 
 
+
+  ;; inhibit Carbon-Emacs menus
+  (custom-set-variables
+   '(display-time-mode t)
+   '(tool-bar-mode nil)
+   '(transient-mark-mode t))
+  (custom-set-faces
+   )
   )
-;; inhibit Carbon-Emacs menus
-(custom-set-variables
- '(display-time-mode t)
- '(tool-bar-mode nil)
- '(transient-mark-mode t))
-(custom-set-faces
- )
  ((string-match "linux" system-configuration)
   ;;linux configs
   )
@@ -78,7 +79,6 @@
 (server-start)
 ;;
 (menu-bar-mode -1)
-(tool-bar-mode 0)
 
 
 
@@ -410,3 +410,4 @@ ad-do-it))
 
 ;; maximize the window in last
 (mac-toggle-max-window)
+(tool-bar-mode 0)
