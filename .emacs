@@ -76,9 +76,7 @@
         try-expand-dabbrev))
 
 
-(server-start)
-;;
-(menu-bar-mode -1)
+
 
 
 
@@ -89,21 +87,21 @@
 
 ;; http://d.hatena.ne.jp/rubikitch/20070725#1186048100
 ;; http://dev.ariel-networks.com/Members/matsuyama/open-anything-emacs
-(require 'anything-config)
+;(require 'anything-config)
 
-(setq anything-sources (list anything-c-source-buffers
-                             anything-c-source-file-name-history
-                             anything-c-source-info-pages
-                             anything-c-source-man-pages
-                             anything-c-source-locate
-                             anything-c-source-emacs-commands
+;(setq anything-sources (list anything-c-source-buffers
+;                             anything-c-source-file-name-history
+;                             anything-c-source-info-pages
+;                             anything-c-source-man-pages
+;                             anything-c-source-locate
+;                             anything-c-source-emacs-commands
                                         ; anything-source-buffers 
                                         ; anything-source-bookmarks 
                              ;;anything-source-recentf
                                         ; anything-source-file-name-history
                                         ; anything-source-locate-r
                                         ; anything-source-complex-command-history
-                             ))
+;                             ))
 ;(setq anything-type-actions (list anything-actions-buffer
 ;                                  anything-actions-file
 ;                                  anything-actions-sexp))
@@ -411,3 +409,6 @@ ad-do-it))
 ;; maximize the window in last
 (mac-toggle-max-window)
 (tool-bar-mode 0)
+(server-start)
+;;
+(menu-bar-mode -1)
