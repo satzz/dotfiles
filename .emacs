@@ -107,21 +107,21 @@
 ;                                  anything-actions-sexp))
 
 ;; http://d.hatena.ne.jp/antipop/20081120/1227180641
-(require 'outputz)
-(setq outputz-uri "http://localsatzz.com/%s");; post for each major-mode
-(global-outputz-mode t)
+;(require 'outputz)
+;(setq outputz-uri "http://localsatzz.com/%s");; post for each major-mode
+;(global-outputz-mode t)
 
 ;; http://d.hatena.ne.jp/yaotti/20081121/1227252525
 ;auto-save-buffers x outputz.el
-(remove-hook 'after-save-hook 'outputz)
-(add-hook 'kill-buffer-hook 'outputz)
-(defvar my-before-kill-emacs-hook nil
-  "Hook to run before `save-buffers-kill-emacs'.")
-(defun outputz-buffers ()
-  (dolist (buf (buffer-list))
-    (with-current-buffer buf
-      (outputz))))
-(add-hook 'my-before-kill-emacs-hook 'outputz-buffers)
+;(remove-hook 'after-save-hook 'outputz)
+;(add-hook 'kill-buffer-hook 'outputz)
+;(defvar my-before-kill-emacs-hook nil
+;  "Hook to run before `save-buffers-kill-emacs'.")
+;(defun outputz-buffers ()
+;  (dolist (buf (buffer-list))
+;    (with-current-buffer buf
+;      (outputz))))
+;(add-hook 'my-before-kill-emacs-hook 'outputz-buffers)
 (defadvice save-buffers-kill-emacs (around before-kill-hook activate)
   (run-hooks 'my-before-kill-emacs-hook)
   (sleep-for 1) ;;FIX ME?
