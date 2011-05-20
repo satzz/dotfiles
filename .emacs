@@ -23,6 +23,13 @@
 
 
   )
+;; inhibit Carbon-Emacs menus
+(custom-set-variables
+ '(display-time-mode t)
+ '(tool-bar-mode nil)
+ '(transient-mark-mode t))
+(custom-set-faces
+ )
  ((string-match "linux" system-configuration)
   ;;linux configs
   )
@@ -239,13 +246,6 @@
 (setq backup-inhibited t)
 
 
-;; inhibit Carbon-Emacs menus
-(custom-set-variables
- '(display-time-mode t)
- '(tool-bar-mode nil)
- '(transient-mark-mode t))
-(custom-set-faces
- )
 
 (setq display-time-day-and-date t)
 (display-time)
