@@ -57,9 +57,9 @@
 (add-to-load-path "/home/samba/site-lisp/emacs-rails")
 ;use emacs-rails mode
 (setq auto-mode-alist  (cons '("\\.rhtml$" . ruby-mode) auto-mode-alist))
-(require 'rails)
-(define-key rails-minor-mode-map "\C-c\C-p" 'rails-lib:run-primary-switch)
-(define-key rails-minor-mode-map "\C-c\C-n" 'rails-lib:run-secondary-switch)
+;(require 'rails)
+;(define-key rails-minor-mode-map "\C-c\C-p" 'rails-lib:run-primary-switch)
+;(define-key rails-minor-mode-map "\C-c\C-n" 'rails-lib:run-secondary-switch)
 (defun try-complete-abbrev (old)
   (if (expand-abbrev) t nil)) 
 (setq hippie-expand-try-functions-list
