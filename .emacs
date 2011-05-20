@@ -7,6 +7,13 @@
 (cond
  ((string-match "apple-darwin" system-configuration)
 
+;; Zen Coding Mode
+(require 'zencoding-mode)
+(add-hook 'sgml-mode-hook 'zencoding-mode)
+(add-hook 'html-mode-hook 'zencoding-mode)
+(add-hook 'text-mode-hook 'zencoding-mode)
+(define-key zencoding-mode-keymap "\C-i" 'zencoding-expand-line)
+
   ;;mac configs
   (display-battery-mode t)
 
@@ -394,12 +401,6 @@
 
 (global-set-key "\C-c\C-l" 'toggle-truncate-lines) 
 
-;; Zen Coding Mode
-(require 'zencoding-mode)
-(add-hook 'sgml-mode-hook 'zencoding-mode)
-(add-hook 'html-mode-hook 'zencoding-mode)
-(add-hook 'text-mode-hook 'zencoding-mode)
-(define-key zencoding-mode-keymap "\C-i" 'zencoding-expand-line)
 
 ;; filter rich texts from office documents
 ;; http://d.hatena.ne.jp/librarius_I/20110214/1297643472
