@@ -4,110 +4,6 @@
 
 
 
-(cond
- ((string-match "apple-darwin" system-configuration)
-
-;; Zen Coding Mode
-(require 'zencoding-mode)
-(add-hook 'sgml-mode-hook 'zencoding-mode)
-(add-hook 'html-mode-hook 'zencoding-mode)
-(add-hook 'text-mode-hook 'zencoding-mode)
-(define-key zencoding-mode-keymap "\C-i" 'zencoding-expand-line)
-
-  ;;mac configs
-  (display-battery-mode t)
-
-  (when (eq window-system 'mac)
-    (add-hook 'window-setup-hook
-              (lambda ()
-                ;;              (setq mac-autohide-menubar-on-maximize t)
-                (set-frame-parameter nil 'fullscreen 'fullboth)
-                )))
-
-  (defun mac-toggle-max-window ()
-    (interactive)
-    (if (frame-parameter nil 'fullscreen)
-        (set-frame-parameter nil 'fullscreen nil)
-      (set-frame-parameter nil 'fullscreen 'fullboth)))
-
-
-
-
-  ;; inhibit Carbon-Emacs menus
-  (custom-set-variables
-   '(display-time-mode t)
-   '(tool-bar-mode nil)
-   '(transient-mark-mode t))
-  (custom-set-faces
-   )
-;; flymake
-(require 'flymake)
-
-;; set-perl5lib
-;; add lib to @INC for the opened script path
-;; http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
-(require 'set-perl5lib)
-
-;; error/warning face
-(set-face-background 'flymake-errline "red4")
-(set-face-foreground 'flymake-errline "black")
-(set-face-background 'flymake-warnline "yellow")
-(set-face-foreground 'flymake-warnline "black")
-
-;; show errors in mini buffer
-;; http://d.hatena.ne.jp/xcezx/20080314/1205475020
-(defun flymake-display-err-minibuf ()
-  "Displays the error/warning for the current line in the minibuffer"
-  (interactive)
-  (let* ((line-no             (flymake-current-line-no))
-         (line-err-info-list  (nth 0 (flymake-find-err-info flymake-err-info line-no)))
-         (count               (length line-err-info-list)))
-    (while (> count 0)
-      (when line-err-info-list
-        (let* ((file       (flymake-ler-file (nth (1- count) line-err-info-list)))
-               (full-file  (flymake-ler-full-file (nth (1- count) line-err-info-list)))
-               (text (flymake-ler-text (nth (1- count) line-err-info-list)))
-               (line       (flymake-ler-line (nth (1- count) line-err-info-list))))
-          (message "[%s] %s" line text)))
-      (setq count (1- count)))))
-
-;; flymake x perl
-;; http://unknownplace.org/memo/2007/12/21#e001
-(defvar flymake-perl-err-line-patterns
-  '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
-
-(defconst flymake-allowed-perl-file-name-masks
-  '(("\\.pl$" flymake-perl-init)
-    ("\\.pm$" flymake-perl-init)
-    ("\\.t$" flymake-perl-init)))
-
-(defun flymake-perl-init ()
-  (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                     'flymake-create-temp-inplace))
-         (local-file (file-relative-name
-                      temp-file
-                      (file-name-directory buffer-file-name))))
-    (list "perl" (list "-wc" local-file))))
-
-(defun flymake-perl-load ()
-  (interactive)
-  (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
-    (setq flymake-check-was-interrupted t))
-  (ad-activate 'flymake-post-syntax-check)
-  (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
-  (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
-  (set-perl5lib)
-  (flymake-mode t))
-
-(add-hook 'cperl-mode-hook 'flymake-perl-load)
-  )
- ((string-match "linux" system-configuration)
-  ;;linux configs
-  )
- ((string-match "mingw" system-configuration)
-  ;;windows configs
-  )
- )                                      ; 
 
 ;r-mode
 
@@ -409,9 +305,116 @@
 (set-text-properties 0 (length new) nil new)
 ad-do-it))
 
+
+
 ;; maximize the window in last
 (mac-toggle-max-window)
 (tool-bar-mode 0)
 (server-start)
 ;;
 (menu-bar-mode -1)
+
+(cond
+ ((string-match "apple-darwin" system-configuration)
+
+;; Zen Coding Mode
+(require 'zencoding-mode)
+(add-hook 'sgml-mode-hook 'zencoding-mode)
+(add-hook 'html-mode-hook 'zencoding-mode)
+(add-hook 'text-mode-hook 'zencoding-mode)
+(define-key zencoding-mode-keymap "\C-i" 'zencoding-expand-line)
+
+  ;;mac configs
+  (display-battery-mode t)
+
+  (when (eq window-system 'mac)
+    (add-hook 'window-setup-hook
+              (lambda ()
+                ;;              (setq mac-autohide-menubar-on-maximize t)
+                (set-frame-parameter nil 'fullscreen 'fullboth)
+                )))
+
+  (defun mac-toggle-max-window ()
+    (interactive)
+    (if (frame-parameter nil 'fullscreen)
+        (set-frame-parameter nil 'fullscreen nil)
+      (set-frame-parameter nil 'fullscreen 'fullboth)))
+
+
+
+
+  ;; inhibit Carbon-Emacs menus
+  (custom-set-variables
+   '(display-time-mode t)
+   '(tool-bar-mode nil)
+   '(transient-mark-mode t))
+  (custom-set-faces
+   )
+;; flymake
+(require 'flymake)
+
+;; set-perl5lib
+;; add lib to @INC for the opened script path
+;; http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
+(require 'set-perl5lib)
+
+;; error/warning face
+(set-face-background 'flymake-errline "red4")
+(set-face-foreground 'flymake-errline "black")
+(set-face-background 'flymake-warnline "yellow")
+(set-face-foreground 'flymake-warnline "black")
+
+;; show errors in mini buffer
+;; http://d.hatena.ne.jp/xcezx/20080314/1205475020
+(defun flymake-display-err-minibuf ()
+  "Displays the error/warning for the current line in the minibuffer"
+  (interactive)
+  (let* ((line-no             (flymake-current-line-no))
+         (line-err-info-list  (nth 0 (flymake-find-err-info flymake-err-info line-no)))
+         (count               (length line-err-info-list)))
+    (while (> count 0)
+      (when line-err-info-list
+        (let* ((file       (flymake-ler-file (nth (1- count) line-err-info-list)))
+               (full-file  (flymake-ler-full-file (nth (1- count) line-err-info-list)))
+               (text (flymake-ler-text (nth (1- count) line-err-info-list)))
+               (line       (flymake-ler-line (nth (1- count) line-err-info-list))))
+          (message "[%s] %s" line text)))
+      (setq count (1- count)))))
+
+;; flymake x perl
+;; http://unknownplace.org/memo/2007/12/21#e001
+(defvar flymake-perl-err-line-patterns
+  '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
+
+(defconst flymake-allowed-perl-file-name-masks
+  '(("\\.pl$" flymake-perl-init)
+    ("\\.pm$" flymake-perl-init)
+    ("\\.t$" flymake-perl-init)))
+
+(defun flymake-perl-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name))))
+    (list "perl" (list "-wc" local-file))))
+
+(defun flymake-perl-load ()
+  (interactive)
+  (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+    (setq flymake-check-was-interrupted t))
+  (ad-activate 'flymake-post-syntax-check)
+  (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
+  (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
+  (set-perl5lib)
+  (flymake-mode t))
+
+(add-hook 'cperl-mode-hook 'flymake-perl-load)
+  )
+ ((string-match "linux" system-configuration)
+  ;;linux configs
+  )
+ ((string-match "mingw" system-configuration)
+  ;;windows configs
+  )
+ )                                      ; 
