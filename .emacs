@@ -308,7 +308,6 @@ ad-do-it))
 
 
 ;; maximize the window in last
-(mac-toggle-max-window)
 (tool-bar-mode 0)
 (server-start)
 ;;
@@ -410,6 +409,10 @@ ad-do-it))
   (flymake-mode t))
 
 (add-hook 'cperl-mode-hook 'flymake-perl-load)
+
+(mac-toggle-max-window)
+
+
   )
  ((string-match "linux" system-configuration)
   ;;linux configs
