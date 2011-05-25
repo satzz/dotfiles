@@ -36,6 +36,7 @@
 (add-to-load-path "/home/samba/site-lisp")
 (add-to-load-path "/home/samba/site-lisp/emacs-rails")
 
+;http://www.ginnokagi.com/2008/04/emacs.html
 (require 'wb-line-number)
 (setq truncate-partial-width-windows nil)
 (set-scroll-bar-mode nil)
