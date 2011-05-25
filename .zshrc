@@ -377,3 +377,6 @@ if [[ -s $HOME/.rvm/scripts/rvm ]]; then
 fi
 
 alias r=rails
+alias ls='ls -F'
+# http://www.omakase.org/perl/cpanm.html
+alias cpan='cpanm'
