@@ -10,6 +10,11 @@
 (setq auto-mode-alist
      (cons (cons "\\.r$" 'R-mode) auto-mode-alist))
 (autoload 'R-mode "ess-site" "Emacs Speaks Statistics mode" t)
+;http://googlewhacks.blogspot.com/2007/05/emacs-perltidy-mode.html
+(autoload 'perltidy "perltidy-mode" nil t)
+(autoload 'perltidy-mode "perltidy-mode" nil t)
+(eval-after-load "cperl-mode"
+    '(add-hook 'cperl-mode-hook 'perltidy-mode))
 
 ;(set-default-font "-adobe-courier-bold-r-normal--*-140-*-*-m-*-iso8859-1")
 (global-font-lock-mode t)                                        ; S/R   TeX
@@ -48,7 +53,7 @@
 
 
 (require 'auto-save-buffers)
-(run-with-idle-timer 0.5 t 'auto-save-buffers) 
+(run-with-idle-timer 0.5 t 'auto-save-buffers)
 
 
 ;; http://d.hatena.ne.jp/rubikitch/20070725#1186048100
