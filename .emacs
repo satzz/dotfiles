@@ -35,6 +35,13 @@
 (add-to-load-path "/usr/share/emacs/site-lisp")
 (add-to-load-path "/home/samba/site-lisp")
 (add-to-load-path "/home/samba/site-lisp/emacs-rails")
+
+(require 'wb-line-number)
+(setq truncate-partial-width-windows nil)
+(set-scroll-bar-mode nil)
+(setq wb-line-number-scroll-bar t)
+(wb-line-number-toggle)
+
 ;use emacs-rails mode
 (setq auto-mode-alist  (cons '("\\.rhtml$" . ruby-mode) auto-mode-alist))
 ;(require 'rails)
