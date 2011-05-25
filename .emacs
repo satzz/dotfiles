@@ -11,6 +11,7 @@
      (cons (cons "\\.r$" 'R-mode) auto-mode-alist))
 (autoload 'R-mode "ess-site" "Emacs Speaks Statistics mode" t)
 ;http://googlewhacks.blogspot.com/2007/05/emacs-perltidy-mode.html
+(require 'cl) ; before perltidy
 (autoload 'perltidy "perltidy-mode" nil t)
 (autoload 'perltidy-mode "perltidy-mode" nil t)
 (eval-after-load "cperl-mode"
