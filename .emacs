@@ -292,6 +292,10 @@
       (append '(("\\.pm$" . cperl-mode)) auto-mode-alist))
 (setq auto-mode-alist
       (append '(("\\.pl$" . cperl-mode)) auto-mode-alist))
+(setq auto-mode-alist
+      (append '(("\\.cgi$" . cperl-mode)) auto-mode-alist))
+(setq auto-mode-alist
+      (append '(("\\.fcgi$" . cperl-mode)) auto-mode-alist))
 ;(setq cperl-invalid-face nil)
 
 ;soft tab
