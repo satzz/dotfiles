@@ -107,7 +107,9 @@
   (sleep-for 1) ;;FIX ME?
   ad-do-it)
 
-
+;http://d.hatena.ne.jp/m-hiyama/20080627/1214549228
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (setq js2-highlight-level 3)
 (setq js2-basic-offset 4)
 (setq js2-cleanup-whitespace nil)
