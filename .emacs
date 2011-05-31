@@ -33,6 +33,7 @@
                    (add-to-list 'load-path path))
                 (mapcar 'expand-file-name paths)))
 (add-to-load-path "/usr/share/emacs/site-lisp")
+(add-to-load-path "~/site-lisp")
 (add-to-load-path "/home/samba/site-lisp")
 (add-to-load-path "/home/samba/site-lisp/emacs-rails")
 
