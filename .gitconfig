@@ -14,6 +14,6 @@
 	ps = push
 	st = status
 [core]
-	excludesfile = /Users/satodaakihiko/mygit/config/.gitignore
+	excludesfile = ~/.gitignore
 [apply]
 	whitespace = nowarn
