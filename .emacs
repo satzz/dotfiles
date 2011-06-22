@@ -227,6 +227,9 @@
 (setq explicit-sh-args '("-login" "-i"))
 (setq shell-command-switch "-c")
 (setq win32-quote-process-args t)
+; http://www.namazu.org/~tsuchiya/elisp/
+(add-hook 'comint-output-filter-functions
+          'comint-watch-for-password-prompt)
 
 
 (setq truncate-partial-width-windows nil)
