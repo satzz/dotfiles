@@ -380,3 +380,25 @@ alias r=rails
 alias ls='ls -F'
 # http://www.omakase.org/perl/cpanm.html
 alias cpan='cpanm'
+
+#git aliases http://tech.bayashi.jp/archives/entry/0800_dev/2011/003304.html
+alias g="/usr/bin/git"
+alias gs="git status"
+alias gd="git diff"
+alias br="git branch"
+alias ga="git add ."
+alias gh="git help"
+alias gl='git log --graph --decorate --pretty=format:"%ad [%cn] <c:%h t:%t p:%p> %n %Cgree
+n%d%Creset %s %n" --stat -p'
+alias gls='git log --stat --summary'
+if [ -f ~/.git-completion.bash ]; then
+    source ~/.git-completion.bash
+    if [ -r "$HOME/.git-completion.bash" ]; then
+        PS1="[\u@\h\$(__git_ps1 \" %s \")\w]\\$ "
+    else
+        PS1="[\u@\h \w]\\$ "
+    fi
+fi
+
+
+
