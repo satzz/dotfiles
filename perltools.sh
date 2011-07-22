@@ -6,7 +6,7 @@ curl -LO http://xrl.us/perlbrew --insecure
 chmod +x perlbrew
 ./perlbrew install
 echo "source $HOME/perl5/perlbrew/etc/bashrc" >> ~/.zshrc
-
+echo "source $HOME/perl5/perlbrew/etc/bashrc" >> ~/.bashrc
 curl -LO http://xrl.us/cpanm --insecure
 chmod +x cpanm
 cpanm local::lib
