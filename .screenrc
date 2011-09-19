@@ -2,6 +2,6 @@ defencoding eucJP
 escape ^z^z
 #http://d.hatena.ne.jp/naoya/20051223/1135351050
 hardstatus alwayslastline "[%02c] %`%-w%{=b bw}%n %t%{-}%+w"
-idle 60
+#idle 3600
 #http://d.hatena.ne.jp/cuzic/20061124/1164347530
 setenv PROMPT_COMMAND 'echo -n -e "\033k$(whoami)@$(hostname):$(pwd)\033\134"'
