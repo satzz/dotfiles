@@ -1,3 +1,5 @@
+.gitignore
+*.beam
 *.o
 *.lo
 *.la
