@@ -15,3 +15,5 @@ function share_history {
 PROMPT_COMMAND='share_history'
 shopt -u histappend
 export HISTSIZE=9999
+
+export PATH=/usr/local/sbin/:/usr/sbin/:$PATH
