@@ -13,4 +13,4 @@
 *.sw[po]
 tags
 Thumbs.db
-
+Gemfile.lock
