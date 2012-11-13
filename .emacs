@@ -154,6 +154,13 @@
 ;; (add-hook 'cperl-mode-hook '(lambda () (flymake-perl-load)))
 
 
+;http://www.haskell.org/haskellwiki/Haskell_mode_for_Emacs
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+   ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+   (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+   ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+
+
 
 
 ;emacs-w3m
@@ -456,4 +463,6 @@ ad-do-it))
  ((string-match "mingw" system-configuration)
   ;;windows configs
   )
- )                                      ; 
+ )
+
+

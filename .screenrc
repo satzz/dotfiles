@@ -5,3 +5,4 @@ hardstatus alwayslastline "[%02c] %`%-w%{=b bw}%n %t%{-}%+w"
 #idle 3600
 #http://d.hatena.ne.jp/cuzic/20061124/1164347530
 setenv PROMPT_COMMAND 'echo -n -e "\033k$(whoami)@$(hostname):$(pwd)\033\134"'
+defscrollback 10000
