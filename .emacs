@@ -432,6 +432,8 @@ ad-do-it))
   (set-perl5lib)
   (flymake-mode t))
 
+(global-font-lock-mode t)
+
 (add-hook 'cperl-mode-hook 'flymake-perl-load)
 
 (mac-toggle-max-window)
