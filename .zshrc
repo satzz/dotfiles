@@ -402,3 +402,9 @@ fi
 
 
 
+
+### Added by the Heroku Toolbelt
+# export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="/usr/local/heroku/bin:$PATH:/Applications/android-sdk-mac_x86/platforms/android-8/tools/"
+export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home`
+
