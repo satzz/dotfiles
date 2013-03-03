@@ -436,6 +436,24 @@ ad-do-it))
 
 (add-hook 'cperl-mode-hook 'flymake-perl-load)
 
+
+; http://d.hatena.ne.jp/emergent/20070203/1170512717
+;; c-mode
+(setq c-default-style "k&r")
+(add-hook 'c-mode-common-hook
+            '(lambda ()
+             (progn
+               (c-toggle-hungry-state 1)
+               (setq c-basic-offset 4 indent-tabs-mode nil))))
+
+(setq c-indent-level 8)
+(setq c-continued-statement-offset 8)
+(setq c-argdecl-indent 8)
+(setq c-brace-offset -8)
+(setq c-label-offset -0)
+(setq c-comment-indent 2)
+
+
 (mac-toggle-max-window)
 
 
