@@ -154,6 +154,13 @@
 ;; (add-hook 'cperl-mode-hook '(lambda () (flymake-perl-load)))
 
 
+;http://www.haskell.org/haskellwiki/Haskell_mode_for_Emacs
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+   ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+   (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+   ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+
+
 
 
 ;emacs-w3m
@@ -460,8 +467,22 @@ ad-do-it))
   )
  ((string-match "linux" system-configuration)
   ;;linux configs
+
+;;; gosh config
+(setq scheme-program-name "gosh -i")
+(autoload 'scheme-mode "cmuscheme" "Major mode for Scheme." t)
+(autoload 'run-scheme "cmuscheme" "Run an inferior Scheme process." t)
+(defun scheme-other-window ()
+  "Run scheme on other Window"
+  (interactive)
+  (switch-to-buffer-other-window
+   (get-buffer-create "*scheme*"))
+  (run-scheme scheme-program-name))
+(define-key global-map "\C-cs" 'scheme-other-window)
   )
  ((string-match "mingw" system-configuration)
   ;;windows configs
   )
- )                                      ; 
+ )
+
+
