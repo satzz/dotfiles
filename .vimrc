@@ -16,6 +16,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " インストールするプラグインをここに記述
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
+NeoBundle 'slim-template/vim-slim'
 
 call neobundle#end()
 
