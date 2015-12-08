@@ -20,6 +20,10 @@ NeoBundle 'slim-template/vim-slim'
 
 call neobundle#end()
 
+" pathogen
+" https://github.com/tpope/vim-pathogen
+execute pathogen#infect()
+
 " ファイルタイプ別のプラグイン/インデントを有効にする
 filetype plugin indent on
 
