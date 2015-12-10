@@ -14,10 +14,12 @@ endif
 " NeoBundleを初期化
 call neobundle#begin(expand('~/.vim/bundle/'))
 
+
 " インストールするプラグインをここに記述
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'slim-template/vim-slim'
+NeoBundle 'kchmck/vim-coffee-script'
 
 call neobundle#end()
 
