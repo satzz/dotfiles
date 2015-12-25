@@ -43,6 +43,7 @@ let g:go_fmt_autosave = 0
 
 " add jbuilder syntax highlighting
 au BufNewFile,BufRead *.json.jbuilder set ft=ruby
+au BufNewFile,BufRead *.ru set ft=ruby
 
 
 syntax on
