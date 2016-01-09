@@ -1,0 +1,26 @@
+#!/bin/bash
+# http://hack.aipo.com/archives/9500/
+_ssh_list(){
+  OLDIFS=$IFS
+  IFS=$'\n'
+  OUT=""
+  for ITEM in `grep "Host " ~/.ssh/config | sed -e "s/ \+/ /g" |cut -f2 -d" "`
+  do
+    OUT="${ITEM} ${OUT}"
+  done
+  IFS=$OLDIFS
+  echo ${OUT}
+}   
+
+_ssh_comp() {
+  local cur
+  cur=${COMP_WORDS[COMP_CWORD]} 
+  if (( $COMP_CWORD <= 1 )); then
+    COMPREPLY=($( compgen -W "`_ssh_list`" -- $cur ))
+  else
+    COMPREPLY=() 
+  fi
+}
+
+alias sshc="ssh -F ~/.ssh/config"
+complete -o bashdefault -F _ssh_comp sshc
