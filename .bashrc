@@ -27,4 +27,3 @@ export RUBYLIB=$R3PATH:$RUBYLIB
 export RUBYLIB=/usr/local/rvm/wrappers/ruby-1.8.7-p352@rails3.0:$RUBYLIB
 export RUBYLIB=/usr/local/rvm/gems/ruby-1.8.7-p352/gems/rubygems-update-1.3.7/bin/:$RUBYLIB
 
-source ~/dotfiles/ssh_complete
