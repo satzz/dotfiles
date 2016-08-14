@@ -37,12 +37,10 @@
 (add-to-load-path "/home/samba/site-lisp")
 (add-to-load-path "/home/samba/site-lisp/emacs-rails")
 
-;http://www.ginnokagi.com/2008/04/emacs.html
-(require 'wb-line-number)
-(setq truncate-partial-width-windows nil)
-(set-scroll-bar-mode nil)
-(setq wb-line-number-scroll-bar t)
-(wb-line-number-toggle)
+;http://gakutarou.hatenablog.com/entry/2013/07/15/104820
+(require 'linum)
+(global-linum-mode t)
+(setq linum-format "%5d: ")
 
 ;use emacs-rails mode
 (setq auto-mode-alist  (cons '("\\.rhtml$" . ruby-mode) auto-mode-alist))
