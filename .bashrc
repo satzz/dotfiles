@@ -17,4 +17,6 @@ shopt -u histappend
 export HISTSIZE=9999
 
 alias r=rails
+export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
