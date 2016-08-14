@@ -67,8 +67,8 @@
 
 
 
-(require 'auto-save-buffers)
-(run-with-idle-timer 0.5 t 'auto-save-buffers)
+;(require 'auto-save-buffers)
+;(run-with-idle-timer 0.5 t 'auto-save-buffers)
 
 
 ;; http://d.hatena.ne.jp/rubikitch/20070725#1186048100
@@ -391,7 +391,7 @@ ad-do-it))
 ;; set-perl5lib
 ;; add lib to @INC for the opened script path
 ;; http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
-(require 'set-perl5lib)
+;(require 'set-perl4lib)
 
 ;; error/warning face
 (set-face-background 'flymake-errline "red4")
