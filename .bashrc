@@ -20,5 +20,6 @@ alias r=rails
 export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+source $HOME/dotfiles/.bashrc.rvm
 source $HOME/dotfiles/.bashrc.nvm
 source $HOME/dotfiles/.bashrc.android
