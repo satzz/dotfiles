@@ -8,6 +8,8 @@
   export NVM_DIR=~/.nvm
   source $(brew --prefix nvm)/nvm.sh
 
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
 source ~/dotfiles/ssh_complete
+source ~/dotfiles/.bash_profile.python
+source ~/dotfiles/.bash_profile.google_cloud
+
+export PATH
