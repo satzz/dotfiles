@@ -11,3 +11,5 @@ alias r=rails
 source $HOME/dotfiles/.bashrc.rvm
 source $HOME/dotfiles/.bashrc.nvm
 source $HOME/dotfiles/.bashrc.android
+
+export EDITOR=vim
