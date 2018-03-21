@@ -12,5 +12,6 @@ source $HOME/dotfiles/.bashrc.golang
 source $HOME/dotfiles/.bashrc.rvm
 source $HOME/dotfiles/.bashrc.nvm
 source $HOME/dotfiles/.bashrc.android
+source $HOME/dotfiles/.bashrc.yarn
 
 export EDITOR=vim
