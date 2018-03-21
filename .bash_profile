@@ -7,5 +7,6 @@ source ~/dotfiles/.bash_profile.python
 source ~/dotfiles/.bash_profile.google_cloud
 source ~/dotfiles/.bash_profile.nvm
 source ~/dotfiles/.bash_profile.rvm
+# source ~/dotfiles/.bash_profile.rust
 
 export PATH
