@@ -21,6 +21,8 @@ NeoBundle 'Shougo/vimfiler'
 NeoBundle 'slim-template/vim-slim'
 NeoBundle 'kchmck/vim-coffee-script'
 
+" git clone https://github.com/leafgarland/typescript-vim.git ~/.vim/bundle/typescript-vim
+
 call neobundle#end()
 
 " pathogen
