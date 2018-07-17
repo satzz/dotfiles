@@ -14,4 +14,6 @@ source $HOME/dotfiles/.bashrc.nvm
 source $HOME/dotfiles/.bashrc.android
 source $HOME/dotfiles/.bashrc.yarn
 
+source ~/bash-wakatime/bash-wakatime.sh
+
 export EDITOR=vim
