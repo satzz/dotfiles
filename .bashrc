@@ -19,3 +19,5 @@ source $HOME/dotfiles/.bashrc.yarn
 source ~/bash-wakatime/bash-wakatime.sh
 
 export EDITOR=vim
+alias ctags='/usr/local/bin/ctags'
+

@@ -49,3 +49,4 @@ au BufNewFile,BufRead *.ru set ft=ruby
 
 
 syntax on
+set tags=tags
