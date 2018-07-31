@@ -4,6 +4,8 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+export PS1="\[\e[1;33m\]\u@\h \w\\$ \[\e[m\]"
+
 source $HOME/dotfiles/.bashrc.history
 
 alias r=rails
