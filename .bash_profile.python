@@ -1,11 +1,10 @@
-
-# Setting PATH for Python 2.7
 # The original version is saved in .bash_profile.pysave
 
 PYENV_ROOT="$HOME/.pyenv"
 
 PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 PATH="$HOME/Library/Python/2.7/bin:${PATH}"
+PATH="$HOME/Library/Python/3.7/bin:${PATH}"
 PATH="$PYENV_ROOT/bin:$PATH"
 
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
