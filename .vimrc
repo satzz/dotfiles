@@ -98,4 +98,5 @@ au BufNewFile,BufRead *.ru set ft=ruby
 syntax on
 set tags=tags
 
+" set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
 Plugin 'wakatime/vim-wakatime'
