@@ -1,2 +1,0 @@
-source ~/bin/emsdk_portable/emsdk_env.sh
-export PATH="$HOME/.cargo/bin:$PATH"
