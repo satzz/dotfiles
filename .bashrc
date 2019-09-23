@@ -17,6 +17,7 @@ source $HOME/dotfiles/.bashrc.android
 source $HOME/dotfiles/.bashrc.yarn
 source $HOME/dotfiles/.bashrc.rust
 
+# https://wakatime.com/terminal
 source ~/bash-wakatime/bash-wakatime.sh
 
 export EDITOR=vim
