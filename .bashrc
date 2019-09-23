@@ -15,6 +15,7 @@ source $HOME/dotfiles/.bashrc.rvm
 source $HOME/dotfiles/.bashrc.nvm
 source $HOME/dotfiles/.bashrc.android
 source $HOME/dotfiles/.bashrc.yarn
+source $HOME/dotfiles/.bashrc.rust
 
 source ~/bash-wakatime/bash-wakatime.sh
 
