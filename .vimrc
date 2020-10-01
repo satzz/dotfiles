@@ -100,4 +100,6 @@ syntax on
 set tags=tags
 
 " set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
+set laststatus=2
+set statusline+=%f
 Plugin 'wakatime/vim-wakatime'
