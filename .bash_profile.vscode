@@ -1,0 +1,4 @@
+# Add Visual Studio Code (code)
+echo $PATH
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+echo $PATH
